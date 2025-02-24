@@ -1,5 +1,6 @@
 .NET Core MVC Clean Architecture [Bhrugen Patel]  2/20/25
 
+
 25 Create Project
 Create Solution/Project
 - Open Visual Studio
@@ -9,6 +10,7 @@ Create Solution/Project
 	- .NET 8.0 [Framework]
 	- None [Authentication Type]
 	- Check [Configure for HTTPS]
+
 
 27 Create Clean Architecture
 Add a New Project to the Solution
@@ -25,11 +27,13 @@ Add another New Project to the Solution
 
 Delete all the default Class1.cs files from the new projects.
 
+
 28 Create Villa Model
 We want to break out the default architecture into a Clean Architecture
 - Right click the WhiteLagoon.Domain project and click Add-->New Folder (Entities)
 - Right click the Entities folder and add a new class (Villa). This will be a data model.
 - Add all of the properties. These will be used with EntityFramework to create database table.
+
 
 29 NuGet Packages for Entity Framework
 Add the Nuget packages necessary to use EntityFramework
@@ -44,6 +48,7 @@ Add the Nuget packages necessary to use EntityFramework
 	- Microsoft.EntityFrameworkCore.Tools
 	- Microsoft.EntityFrameworkCore.Design
 
+
 30 Create Application Db Context
 - Right-click the WhiteLagoon.Infrastructure project and Add-->New Folder (Data)
 - Right-click the Data folder and Add-->New Class (ApplicationDbContext)
@@ -51,4 +56,23 @@ Add the Nuget packages necessary to use EntityFramework
 	public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
 	{
 	}
+
+
+31 Add Connection String
+- Open the appsettings.json file in the WhiteLagoon.Web project
+- Add
+	"ConnectionStrings": {
+		"DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=WhiteLagoon;Trusted_Connection=True;MultipleActiveResultSets=True;TrustedServerCertificate=True"
+	}
+
+
+32 Register ApplicationDbContext to Program class
+- Right-click Dependencies in the WhiteLagoon.Web project
+- Click Add Project Reference
+- Check the WhietLagoon.Infrastructure project and select <OK>
+
+- Add the following in the Program class after builder.Services.AddControllersWithViews:
+
+	builder.Services.AddDbContext<ApplicationDbContext>(option=>
+		option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
