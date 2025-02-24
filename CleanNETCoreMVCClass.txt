@@ -1,0 +1,45 @@
+.NET Core MVC Clean Architecture [Bhrugen Patel]  2/20/25
+
+25 Create Project
+Create Solution/Project
+- Open Visual Studio
+- Create New ASP.NET Core Web App (Model-View-Controller)
+- Create a Project name and Solution Name (WhiteLagoon)
+- Additional Information Page:
+	- .NET 8.0 [Framework]
+	- None [Authentication Type]
+	- Check [Configure for HTTPS]
+
+27 Create Clean Architecture
+Add a New Project to the Solution
+- Right click on the Solution and Add-->New Project
+- Add C# Class Library (WhietLagoon.Domain)
+
+Add another New Project to the Solution
+- Right click on the Solution and Add-->New Project
+- Add C# Class Library (WhietLagoon.Application)
+
+Add another New Project to the Solution
+- Right click on the Solution and Add-->New Project
+- Add C# Class Library (WhietLagoon.Infrastructure)
+
+Delete all the default Class1.cs files from the new projects.
+
+28 Create Villa Model
+We want to break out the default architecture into a Clean Architecture
+- Right click the WhiteLagoon.Domain project and click Add-->New Folder (Entities)
+- Right click the Entities folder and add a new class (Villa). This will be a data model.
+- Add all of the properties. These will be used with EntityFramework to create database table.
+
+29 NuGet Packages for Entity Framework
+Add the Nuget packages necessary to use EntityFramework
+- Right click WhiteLagoon.Web Project and click Manage NuGet Packages
+- Install the following:
+	- Microsoft.EntityFrameworkCore.SqlServer
+	- Microsoft.EntityFrameworkCore.Design
+
+- Right click WhiteLagoon.Infrastructure Project and click Manage NuGet Packages
+- Install the following:
+	- Microsoft.EntityFrameworkCore.SqlServer
+	- Microsoft.EntityFrameworkCore.Tools
+	- Microsoft.EntityFrameworkCore.Design
