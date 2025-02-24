@@ -43,3 +43,12 @@ Add the Nuget packages necessary to use EntityFramework
 	- Microsoft.EntityFrameworkCore.SqlServer
 	- Microsoft.EntityFrameworkCore.Tools
 	- Microsoft.EntityFrameworkCore.Design
+
+30 Create Application Db Context
+- Right-click the WhiteLagoon.Infrastructure project and Add-->New Folder (Data)
+- Right-click the Data folder and Add-->New Class (ApplicationDbContext)
+	
+	public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
+	{
+	}
+
