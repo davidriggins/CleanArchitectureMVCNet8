@@ -142,4 +142,22 @@ Add the Nuget packages necessary to use EntityFramework
 	update-database
 
 
+37 Create Villa Controller and Retrieve all Villas
+- In the WhiteLagoon.Web project, right-click on Controllers and select Add-->Controller
+- Select the MVC Controller - Empty option and click <Add>
+- Give it the name "VillaController.cs" - must end with Controller
+
+- Add the dependency injection to the VillaController
+
+	private readonly ApplicationDbContext _db;
+	public VillaController(ApplicationDbContext db)
+	{
+		_db = db;
+	}
+
+- Add the following to the VillaController Index method (to retrieve all the Villas):
+
+	var villas = _db.Villas.ToList();
+	
+
 
