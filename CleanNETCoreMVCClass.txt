@@ -159,5 +159,49 @@ Add the Nuget packages necessary to use EntityFramework
 
 	var villas = _db.Villas.ToList();
 	
+38 Add View for Villa list
+- Right-click on the Index method in the VillaController file and select Add View
+- Select the Razor View - Empty option and the click <Add>
+- Accept the default value of Index.cshtml and click <Add>
+
+- Add the villa list (villas) to the View in the controller:
+
+	return View(villas);
+
+- Create a new link in the _layout.cshtml file for the Layout:
+
+	<li class="nav-item">
+		<a class="nav-link text-dark" asp-area="" asp-controller="Villa" asp-action="Index">Villa</a>
+	</li>
+
+39 Display Villa List on UI
+- Add the following code into the Villa Index.cshtml file:
+
+	@model IEnumerable<WhiteLagoon.Domain.Entities.Villa>
+
+	<h1>Villa List</h1>
+
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Price</th>
+				<th>Sqft</th>
+				<th>Occupancy</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var obj in Model)
+			{
+				<tr>
+					<td>@obj.Name</td>
+					<td>@obj.Price</td>
+					<td>@obj.Sqft</td>
+					<td>@obj.Occupancy</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+
 
 

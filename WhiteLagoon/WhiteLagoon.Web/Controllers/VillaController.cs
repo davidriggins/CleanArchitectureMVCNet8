@@ -16,7 +16,7 @@ namespace WhiteLagoon.Web.Controllers
         {
             var villas = _db.Villas.ToList();
 
-            return View();
+            return View(villas);
         }
     }
 }
