@@ -284,3 +284,23 @@ Add the Nuget packages necessary to use EntityFramework
 - to
 
 	<html lang="en" data-bs-theme="dark">
+
+- In the _layout.cshtml remove
+
+	bg-white from <nav ...
+	text-dark from nav-links
+	
+43 Empty View for Create Villa
+- Add the following in the VillaController:
+
+	public IActionResult Create()
+	{
+		return View();
+	}
+	
+- In the Villa Index.cshtml file, add "Create for tha asp-action of the <a> tag
+
+	<a asp-controller="Villa" asp-action="Create" class="btn btn-secondary">
+
+- Right-click on the Create method in the VillaController and select to Add View
+- Add and Empty View called Create
