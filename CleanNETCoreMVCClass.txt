@@ -75,4 +75,23 @@ Add the Nuget packages necessary to use EntityFramework
 
 	builder.Services.AddDbContext<ApplicationDbContext>(option=>
 		option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+		
+
+33 Create Database
+- Open Tools-->NuGet Package Manager-->Package Manager Console
+- Add the following after the constructor in  the ApplicationDbContext file:
+
+	public DbSet<Villa> Villas { get; set; }
+	
+- In the Package Manager console, select WhiteLagoon.Infrastructure as the Default project
+- Type the following in the Package Manager console command prompt:
+
+	add-migration AddVillaToDb
+
+- then
+	
+	update-database
+	
+
+
 
