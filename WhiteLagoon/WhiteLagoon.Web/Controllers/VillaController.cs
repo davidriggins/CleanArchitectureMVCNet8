@@ -50,10 +50,12 @@ namespace WhiteLagoon.Web.Controllers
 
         public IActionResult Update(int villaId)
         {
+            //var VillaList = _db.Villas.FirstOrDefault(v => v.Price > 50 && v.Occupancy > 0);
+
             var villa = _db.Villas.FirstOrDefault(v => v.Id == villaId);
             if (villa == null)
             {
-                return NotFound();
+                return RedirectToAction("Error", "Home");
             }
 
             return View(villa);
