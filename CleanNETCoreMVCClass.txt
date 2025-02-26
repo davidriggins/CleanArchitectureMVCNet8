@@ -610,4 +610,36 @@ Add the Nuget packages necessary to use EntityFramework
 
 	toastr.error('@TempData["error"]');
 
+63 Partial Views
+Partial views help reduce redundant code.
+Partial views are typically consumed in other views.
 
+- Right-click the Shared folder under Views and select Add View
+- Add a View called _Notification (partial view)
+- Cut and paste the content from the _Layout view into the new partial view:
+
+	 @if(TempData["error"]!=null)
+	 {
+		 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+		 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		 <script type="text/javascript">
+			 toastr.error('@TempData["error"]');
+			 @* <div class="text-danger h3">@TempData["error"]</div> *@
+		 </script>
+	 }
+	 @if(TempData["success"]!=null)
+	 {
+		 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+		 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		 <script type="text/javascript">
+			 toastr.success('@TempData["success"]');
+			 @* <div class="text-success h3">@TempData["success"]</div> *@
+		 </script>
+	 }
+ 
+ - Copy the following into the _Layout view before @RenderBody
+ 
+	<partial name="_Notification"/>
+
+
+ 
