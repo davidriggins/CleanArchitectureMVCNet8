@@ -654,3 +654,16 @@ Partial views are typically consumed in other views.
 - With
 
 	@model Villa
+
+69 Remove some ModelState Validation items
+- Open up the WhiteLagoon.Domain project file and add the following:
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	
+- In the VillaNumber class, add the [ValidateNever] attribute
+
+	[ValidateNever]
+	public Villa Villa { get; set; }
+	

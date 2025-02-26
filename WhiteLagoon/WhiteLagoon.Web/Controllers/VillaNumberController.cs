@@ -28,6 +28,9 @@ namespace WhiteLagoon.Web.Controllers
         [HttpPost]
         public IActionResult Create(VillaNumber obj)
         {
+            //// The following line removes villa from validation
+            //ModelState.Remove("Villa");
+
             if (ModelState.IsValid)
             {
                 _db.VillaNumbers.Add(obj);
