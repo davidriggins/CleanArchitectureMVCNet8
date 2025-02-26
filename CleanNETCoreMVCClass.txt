@@ -363,3 +363,15 @@ Add the Nuget packages necessary to use EntityFramework
 		</div>
 	</div>
 
+47 Create First Villa
+- Add the following to the VillaController
+
+	[HttpPost]
+	public IActionResult Create(Villa obj)
+	{
+		_db.Villas.Add(obj);
+		_db.SaveChanges();
+
+		return RedirectToAction("Index");
+
+	}
