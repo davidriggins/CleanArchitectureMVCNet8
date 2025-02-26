@@ -641,5 +641,16 @@ Partial views are typically consumed in other views.
  
 	<partial name="_Notification"/>
 
+65 Global Using Statement
+- You can define a global using statement in the _ViewImports partial view as such:
 
- 
+	@using WhiteLagoon.Domain.Entities
+	
+- Then, the long-form can be replaced in other Views in the View folders
+- Replace
+
+	@model WhiteLagoon.Domain.Entities.Villa
+
+- With
+
+	@model Villa
