@@ -443,3 +443,23 @@ Add the Nuget packages necessary to use EntityFramework
 - Copy the contents of the Create view into the new Update View.
 - Change the Header name and button to Update
 
+58 Update in Action
+- Add the following line in the Update.cshtml inside the <form>
+
+	<input asp-for="Id" hidden />
+	
+- Add the following method inside the VillaController
+
+	[HttpPost]
+	public IActionResult Update(Villa obj)
+	{
+		if (ModelState.IsValid)
+		{
+			_db.Villas.Update(obj);
+			_db.SaveChanges();
+
+			return RedirectToAction("Index");
+		}
+
+		return View();
+	}
