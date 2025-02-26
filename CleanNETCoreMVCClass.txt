@@ -402,3 +402,24 @@ Add the Nuget packages necessary to use EntityFramework
 			<partial name="_ValidationScriptsPartial"/>
 		}
 	}
+
+53 Edit and Delete buttons in UI
+- Add <th> row in <thead> for Index.cshtml
+
+	<th></th>
+	
+- Add following <td> in the <tbody> for Index.cshtml
+
+	<td>
+		<div class="w-75 btn-group" role="group">
+			<a asp-controller="Villa" asp-action="Update" asp-route-villaId="@obj.Id"
+				class="btn btn-success mx-2">
+				<i class="bg-info bi-pencil-square"></i> Edit
+			</a>
+			<a asp-controller="Villa" asp-action="Delete" asp-route-villaId="@obj.Id"
+			   class="btn btn-danger mx-2">
+				<i class="bg-info bi-trash-fill"></i> Delete
+			</a>
+		</div>
+	</td>
+
