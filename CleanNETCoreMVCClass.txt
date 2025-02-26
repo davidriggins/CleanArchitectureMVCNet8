@@ -375,3 +375,21 @@ Add the Nuget packages necessary to use EntityFramework
 		return RedirectToAction("Index");
 
 	}
+
+48 Server Side Validation
+- Modify the Create method in the VillaController to:
+
+	if (ModelState.IsValid)
+	{
+		_db.Villas.Add(obj);
+		_db.SaveChanges();
+
+		return RedirectToAction("Index");
+	}
+
+	return View();
+	
+- Add a server side validation line for each item in the form in the Create.cshtml
+
+	<span asp-validation-for="Name" class="text-danger"></span>
+
