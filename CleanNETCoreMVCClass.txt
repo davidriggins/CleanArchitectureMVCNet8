@@ -585,3 +585,29 @@ Add the Nuget packages necessary to use EntityFramework
 
 	TempData["success"] = "Villa Deleted Successfully";
 
+62 Toastr in Project
+- Google search Toastr CDN
+- Copy the toastr.min.js Script tag in the if(TempData) statements in the _Layout View:
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	
+- Copy the toaster.css Script tag to the <head> in the _Layout View
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+- Copy the following jquery script tag in the if(TempData) statements before the toastr script tags
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+- Embed the error and success divs in the _Layout View as such:
+
+	<script type="text/javascript">
+		<div class="text-success h3">@TempData["success"]</div>
+	</script>
+
+- Go to the CodeSeven Toastr github page.
+- Copy an "Other Options" usage examples
+
+	toastr.error('@TempData["error"]');
+
+
