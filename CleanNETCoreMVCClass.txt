@@ -423,3 +423,23 @@ Add the Nuget packages necessary to use EntityFramework
 		</div>
 	</td>
 
+54 Get Action Method for Update Villa
+- Add the following method into the Villa Controller.
+
+	public IActionResult Update(int villaId)
+	{
+		var villa = _db.Villas.FirstOrDefault(v => v.Id == villaId);
+		if (villa == null)
+		{
+			return NotFound();
+		}
+
+		return View(villa);
+	}
+	
+55 Update Villa UI
+- Right-click on the Update method in the VillaController and select Add View
+- Create a Empty View called Update
+- Copy the contents of the Create view into the new Update View.
+- Change the Header name and button to Update
+
