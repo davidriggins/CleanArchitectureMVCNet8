@@ -567,3 +567,21 @@ Add the Nuget packages necessary to use EntityFramework
 
 		return View();
 	}
+
+
+61 Temp Data Notifications
+- Add the following before @RenderBody() in the _Layout View
+
+	@if(TempData["error"]!=null)
+	{
+		<div class="text-danger h3">@TempData["error"]</div>
+	}
+	@if(TempData["success"]!=null)
+	{
+		<div class="text-success h3">@TempData["success"]</div>
+	}
+
+- Add lines similar to the following in the VillaController
+
+	TempData["success"] = "Villa Deleted Successfully";
+
