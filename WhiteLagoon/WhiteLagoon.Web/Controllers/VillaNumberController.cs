@@ -26,21 +26,14 @@ namespace WhiteLagoon.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Villa obj)
+        public IActionResult Create(VillaNumber obj)
         {
-            // Custom Model Validation
-            if (obj.Name == obj.Description)
-            {
-                ModelState.AddModelError("", "Name and Description cannot be the same");
-                //ModelState.AddModelError("Name", "Name and Description cannot be the same");
-            }
-
             if (ModelState.IsValid)
             {
-                _db.Villas.Add(obj);
+                _db.VillaNumbers.Add(obj);
                 _db.SaveChanges();
 
-                TempData["success"] = "Villa Created Successfully";
+                TempData["success"] = "Villa Number Created Successfully";
 
                 return RedirectToAction("Index");
             }
