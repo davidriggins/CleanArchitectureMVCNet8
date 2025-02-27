@@ -996,7 +996,7 @@ To
 - Add this to the interface:
 
 	IEnumerable<Villa> GetAll(Expression<Func<Villa,bool>>? filter = null, string? includeProperties = null);
-	IEnumerable<Villa> Get(Expression<Func<Villa, bool>> filter, string? includeProperties = null);
+	Villa Get(Expression<Func<Villa, bool>> filter, string? includeProperties = null);
 	void Add(Villa entity);
 	void Update(Villa entity);
 	void Remove(Villa entity);
@@ -1012,4 +1012,80 @@ To
 - Add the following to the Program file for Dependency Injection
 
 	builder.Services.AddScoped<IVillaRepository, VillaRepository>();
+
+84/85 Implementation of methods in Repository
+- The VillaRepository should look like this:
+
+public class VillaRepository : IVillaRepository
+{
+    private readonly ApplicationDbContext _db;
+    public VillaRepository(ApplicationDbContext db)
+    {
+        _db = db;
+    }
+
+    public void Add(Villa entity)
+    {
+        _db.Add(entity);
+    }
+
+    public Villa Get(Expression<Func<Villa, bool>> filter, string? includeProperties = null)
+    {
+        IQueryable<Villa> query = _db.Set<Villa>();
+        if (filter != null)
+        {
+            query = query.Where(filter);
+        }
+
+        if (!string.IsNullOrEmpty(includeProperties))
+        {
+            // Villa,VillaNumber -- case sensitive
+            foreach (var includeProp in includeProperties
+                .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProp);
+            }
+        }
+
+        return query.FirstOrDefault();
+    }
+
+    public IEnumerable<Villa> GetAll(Expression<Func<Villa, bool>>? filter = null, string? includeProperties = null)
+    {
+        IQueryable<Villa> query = _db.Set<Villa>();
+        if (filter != null)
+        {
+            query = query.Where(filter);
+        }
+
+        if (!string.IsNullOrEmpty(includeProperties))
+        {
+            // Villa,VillaNumber -- case sensitive
+            foreach (var includeProp in includeProperties
+                .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProp);
+            }
+        }
+
+        return query.ToList();
+    }
+
+    public void Remove(Villa entity)
+    {
+        _db.Remove(entity);
+    }
+
+    public void Save()
+    {
+        _db.SaveChanges();
+    }
+
+    public void Update(Villa entity)
+    {
+        // Can use either of the following
+        _db.Update(entity);
+        //_db.Villas.Update(entity);
+    }
+}
 
