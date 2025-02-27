@@ -107,19 +107,27 @@ namespace WhiteLagoon.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(Villa obj)
+        public IActionResult Update(VillaNumberVM villaNumberVM)
         {
+
             if (ModelState.IsValid)
             {
-                _db.Villas.Update(obj);
+                _db.VillaNumbers.Update(villaNumberVM.VillaNumber);
                 _db.SaveChanges();
 
-                TempData["success"] = "Villa Updated Successfully";
+                TempData["success"] = "Villa Number has been updated Successfully";
 
                 return RedirectToAction("Index");
             }
 
-            return View();
+            // Need to repopulate the dropdown
+            villaNumberVM.VillaList = _db.Villas.Select(v => new SelectListItem
+            {
+                Text = v.Name,
+                Value = v.Id.ToString()
+            });
+
+            return View(villaNumberVM);
 
         }
 
