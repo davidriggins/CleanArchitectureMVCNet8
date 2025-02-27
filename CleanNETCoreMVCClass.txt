@@ -785,7 +785,8 @@ To
 
 		return View(villaNumberVM);
 	}
-	
+
+
 - Right-click the Update method and select Add View
 - Call the new View "Update"
 - Add this content:
@@ -847,7 +848,142 @@ To
     }
 }
 
+78 Update Post In Action
+- Change the Update post action method in VillaNumberController
+
+	[HttpPost]
+	public IActionResult Update(VillaNumberVM villaNumberVM)
+	{
+
+		if (ModelState.IsValid)
+		{
+			_db.VillaNumbers.Update(villaNumberVM.VillaNumber);
+			_db.SaveChanges();
+
+			TempData["success"] = "Villa Number has been updated Successfully";
+
+			return RedirectToAction("Index");
+		}
+
+		// Need to repopulate the dropdown
+		villaNumberVM.VillaList = _db.Villas.Select(v => new SelectListItem
+		{
+			Text = v.Name,
+			Value = v.Id.ToString()
+		});
+
+		return View(villaNumberVM);
+
+	}
 
 - Add the following below the <form> tag in the Update View:
 
 	<input asp-for="VillaNumber.Villa_Number" hidden />
+
+79 Delete In Action
+- Change the Delete get action method in VillaNumberController to:
+
+	VillaNumberVM villaNumberVM = new()
+	{
+		VillaList = _db.Villas.Select(v => new SelectListItem
+		{
+			Text = v.Name,
+			Value = v.Id.ToString()
+		}),
+		VillaNumber = _db.VillaNumbers.FirstOrDefault(v => v.Villa_Number == villaNumberId)
+	};
+
+	//var villa = _db.Villas.FirstOrDefault(v => v.Id == villaId);
+	if (villaNumberVM.VillaNumber == null)
+	{
+		return RedirectToAction("Error", "Home");
+	}
+
+	return View(villaNumberVM);
+
+- Right-click the Delete method and click Add View
+- Call the View "Delete"
+- Use the following code:
+
+@model VillaNumberVM
+
+
+<div class="w-100 card border-0 p-4">
+    <div class="card-header bg-success bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Update Villa Number</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body border p-4">
+        <form method="post" class="row">
+
+            <input asp-for="VillaNumber.Villa_Number" hidden />
+
+            <div class="p-3">
+
+                <div class="form-floating py-1 col-12">
+                    <select disabled asp-for="@Model.VillaNumber.VillaId" asp-items="@Model.VillaList"
+                            class="form-select border shadow">
+                        <option disabled selected>--Select Villa--</option>
+                    </select>
+                    @* <input asp-for="VillaId" class="form-control border shadow" /> *@
+                    <label asp-for="VillaNumber.VillaId" class="ms-2"></label>
+                    <span asp-validation-for="VillaNumber.VillaId" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-1 col-12">
+                    <input asp-for="VillaNumber.Villa_Number" disabled class="form-control border shadow" />
+                    <label asp-for="VillaNumber.Villa_Number" class="ms-2"></label>
+                    <span asp-validation-for="VillaNumber.Villa_Number" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-1 col-12">
+                    <input asp-for="VillaNumber.SpecialDetails" disabled class="form-control border shadow" />
+                    <label asp-for="VillaNumber.SpecialDetails" class="ms-2"></label>
+                    <span asp-validation-for="VillaNumber.SpecialDetails" class="text-danger"></span>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-danger w-100">
+                            <i class="bi bi-check-circle"></i> Delete
+                        </button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="VillaNumber" asp-action="Index" class="btn btn-secondary w-100">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
+- Change the Delete post method to:
+	[HttpPost]
+	public IActionResult Delete(VillaNumberVM villaNumberVM)
+	{
+		VillaNumber? objFromDb = _db.VillaNumbers
+			.FirstOrDefault(v => v.Villa_Number == villaNumberVM.VillaNumber.Villa_Number);
+
+		if (objFromDb is not null)
+		{
+			_db.VillaNumbers.Remove(objFromDb);
+			_db.SaveChanges();
+
+			TempData["success"] = "Villa Number has been Deleted Successfully";
+
+			return RedirectToAction("Index");
+		}
+
+		TempData["error"] = "Villa Number Could not be Deleted";
+
+		return View();
+
+	}
