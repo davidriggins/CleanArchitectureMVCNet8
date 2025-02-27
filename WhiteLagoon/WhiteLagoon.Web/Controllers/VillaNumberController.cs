@@ -62,7 +62,7 @@ namespace WhiteLagoon.Web.Controllers
 
                 TempData["success"] = "Villa Number Created Successfully";
 
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             // Error message if room number already exists
@@ -117,7 +117,7 @@ namespace WhiteLagoon.Web.Controllers
 
                 TempData["success"] = "Villa Number has been updated Successfully";
 
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             // Need to repopulate the dropdown
@@ -166,7 +166,7 @@ namespace WhiteLagoon.Web.Controllers
 
                 TempData["success"] = "Villa Number has been Deleted Successfully";
 
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             TempData["error"] = "Villa Number Could not be Deleted";
