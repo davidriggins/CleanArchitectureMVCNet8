@@ -678,3 +678,34 @@ Change:
 	 <select asp-for="@Model.VillaId" asp-items="@ViewData["VillaList"] as IEnumerable<SelectListItem>"
 To:
 	 <select asp-for="@Model.VillaId" asp-items="@ViewBag.VillaList"
+
+73 View Models
+- Right-click on the WhiteLagoon.Web project and Add-->New Folder called ViewModels
+- Right-click on the ViewModels folder and add a Class called VillaNumberVM.
+- Add the contents to the new class:
+
+	public VillaNumber? VillaNumber { get; set; }
+
+	[ValidateNever]
+	public IEnumerable<SelectListItem>? VillaList { get; set; }
+
+- Add the following to the _ViewImports
+
+	@using WhiteLagoon.Web.ViewModels
+
+- Change the @model VillaNumber to @model VillaNumberVM
+- Fix the errors in the file to reference the right items
+
+- Change the Create method in VillaNumberController to:
+
+	VillaNumberVM villaNumberVM = new()
+	{
+		VillaList = _db.Villas.Select(v => new SelectListItem
+		{
+			Text = v.Name,
+			Value = v.Id.ToString()
+		})
+	};
+
+	return View(villaNumberVM);
+
