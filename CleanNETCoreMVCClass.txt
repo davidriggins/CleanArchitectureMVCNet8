@@ -1001,3 +1001,15 @@ To
 	void Update(Villa entity);
 	void Remove(Villa entity);
 	void Save();
+
+82 Implement the Villa Repository
+- Right-click the WhietLagoon.Infrastructure and select Add=>Folder "Repository"
+- Right-click the Repository and click Add=>Class "VillaRepository"
+- The VillaRepository will Implement IVillaRepository
+
+	VillaRepository : IVillaRepository
+
+- Add the following to the Program file for Dependency Injection
+
+	builder.Services.AddScoped<IVillaRepository, VillaRepository>();
+
