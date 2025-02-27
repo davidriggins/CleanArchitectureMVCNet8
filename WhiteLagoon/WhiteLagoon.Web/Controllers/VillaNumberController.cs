@@ -83,17 +83,27 @@ namespace WhiteLagoon.Web.Controllers
         }
 
 
-        public IActionResult Update(int villaId)
+        public IActionResult Update(int villaNumberId)
         {
             //var VillaList = _db.Villas.FirstOrDefault(v => v.Price > 50 && v.Occupancy > 0);
 
-            var villa = _db.Villas.FirstOrDefault(v => v.Id == villaId);
-            if (villa == null)
+            VillaNumberVM villaNumberVM = new()
+            {
+                VillaList = _db.Villas.Select(v => new SelectListItem
+                {
+                    Text = v.Name,
+                    Value = v.Id.ToString()
+                }),
+                VillaNumber = _db.VillaNumbers.FirstOrDefault(v => v.Villa_Number == villaNumberId)
+            };
+
+            //var villa = _db.Villas.FirstOrDefault(v => v.Id == villaId);
+            if (villaNumberVM.VillaNumber == null)
             {
                 return RedirectToAction("Error", "Home");
             }
 
-            return View(villa);
+            return View(villaNumberVM);
         }
 
         [HttpPost]
