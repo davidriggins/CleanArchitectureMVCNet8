@@ -722,3 +722,40 @@ Change
 	<td>@obj.VillaId</td>
 To
 	<td>@obj.Villa.Name</td>
+	
+76 Unique Villa Number
+- Change the logic in the Create method of VillaNumberController
+
+	[HttpPost]
+	public IActionResult Create(VillaNumberVM obj)
+	{
+		//// The following line removes villa from validation
+		//ModelState.Remove("Villa");
+
+		bool roomNumberExists = _db.VillaNumbers.Any(v => v.Villa_Number == obj.VillaNumber.Villa_Number);
+
+		if (ModelState.IsValid && !roomNumberExists)
+		{
+			_db.VillaNumbers.Add(obj.VillaNumber);
+			_db.SaveChanges();
+
+			TempData["success"] = "Villa Number Created Successfully";
+
+			return RedirectToAction("Index");
+		}
+
+		// Error message if room number already exists
+		if (roomNumberExists)
+		{
+			TempData["error"] = "Villa Number Already Exists";
+		}
+
+		// Need to repopulate the dropdown
+		obj.VillaList = _db.Villas.Select(v => new SelectListItem
+		{
+			Text = v.Name,
+			Value = v.Id.ToString()
+		});
+
+		return View(obj);
+	}
