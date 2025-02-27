@@ -667,3 +667,14 @@ Partial views are typically consumed in other views.
 	[ValidateNever]
 	public Villa Villa { get; set; }
 	
+72 ViewBag
+- used to transfer temporary data from the controller to the view
+- Add the following in the Create of the VillaNumberController
+
+	ViewBag.VillaList = list;
+	
+- In the Create View for VillaNumber
+Change:
+	 <select asp-for="@Model.VillaId" asp-items="@ViewData["VillaList"] as IEnumerable<SelectListItem>"
+To:
+	 <select asp-for="@Model.VillaId" asp-items="@ViewBag.VillaList"
