@@ -709,3 +709,16 @@ To:
 
 	return View(villaNumberVM);
 
+74 Loading Navigation properties:
+- You use .include to load navigation properties in EntityFramework
+- For the Index method in the VillaNumberController
+Change
+	var villaNumbers = _db.VillaNumbers.ToList();
+To
+	var villaNumbers = _db.VillaNumbers.Include(v => v.Villa).ToList();
+	
+- Inside the Index View for VillaNumber
+Change
+	<td>@obj.VillaId</td>
+To
+	<td>@obj.Villa.Name</td>
