@@ -51,7 +51,7 @@ namespace WhiteLagoon.Web.Controllers
                 //_villaRepo.Add(obj);
                 //_villaRepo.Save();
                 _unitOfWork.Villa.Add(obj);
-                _unitOfWork.Villa.Save();
+                _unitOfWork.Save();
 
                 TempData["success"] = "Villa Created Successfully";
 
@@ -88,7 +88,7 @@ namespace WhiteLagoon.Web.Controllers
                 //_villaRepo.Update(obj);
                 //_villaRepo.Save();
                 _unitOfWork.Villa.Update(obj);
-                _unitOfWork.Villa.Save();
+                _unitOfWork.Save();
 
                 TempData["success"] = "Villa Updated Successfully";
 
@@ -127,7 +127,7 @@ namespace WhiteLagoon.Web.Controllers
                 //_villaRepo.Remove(objFromDb);
                 //_villaRepo.Save();
                 _unitOfWork.Villa.Remove(objFromDb);
-                _unitOfWork.Villa.Save();
+                _unitOfWork.Save();
 
                 TempData["success"] = "Villa Deleted Successfully";
 

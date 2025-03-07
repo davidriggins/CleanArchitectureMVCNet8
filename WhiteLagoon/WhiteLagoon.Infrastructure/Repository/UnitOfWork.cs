@@ -19,5 +19,10 @@ namespace WhiteLagoon.Infrastructure.Repository
             _db = db;
             Villa = new VillaRepository(_db);
         }
+
+        public void Save()
+        {
+            _db.SaveChanges();
+        }
     }
 }
