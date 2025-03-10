@@ -172,6 +172,16 @@ namespace WhiteLagoon.Web.Controllers
 
             if (objFromDb is not null)
             {
+                if (!string.IsNullOrEmpty(objFromDb.ImageUrl))
+                {
+                    var oldImageFile = Path.Combine(_webHostEnvironment.WebRootPath, objFromDb.ImageUrl.TrimStart('\\'));
+
+                    if (System.IO.File.Exists(oldImageFile))
+                    {
+                        System.IO.File.Delete(oldImageFile);
+                    }
+                }
+
                 ////_db.Villas.Remove(objFromDb);
                 ////_db.SaveChanges();
                 //_villaRepo.Remove(objFromDb);
