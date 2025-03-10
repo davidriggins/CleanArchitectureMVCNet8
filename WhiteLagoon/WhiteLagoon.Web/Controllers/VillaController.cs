@@ -15,9 +15,12 @@ namespace WhiteLagoon.Web.Controllers
         //}
 
         private readonly IUnitOfWork _unitOfWork;
-        public VillaController(IUnitOfWork unitOfWork)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public VillaController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
+
         }
 
         public IActionResult Index()
@@ -46,6 +49,28 @@ namespace WhiteLagoon.Web.Controllers
 
             if (ModelState.IsValid)
             {
+                if (obj.Image != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(obj.Image.FileName);
+                    string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, @"images\VillaImage");
+
+                    using (var fileStream = new FileStream(Path.Combine(imagePath, fileName), FileMode.Create))
+                    {
+                        obj.Image.CopyTo(fileStream);
+
+                        obj.ImageUrl =
+                    }
+                    //string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                    //string uniqueFileName = Guid.NewGuid().ToString() + "_" + obj.Image.FileName;
+                    //string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    //obj.Image.CopyTo(new FileStream(filePath, FileMode.Create));
+                    //obj.ImageUrl = uniqueFileName;
+                }
+                else {
+                    obj.ImageUrl = "https://placehold.co/600x400";
+                }
+
+
                 ////_db.Villas.Add(obj);
                 ////_db.SaveChanges();
                 //_villaRepo.Add(obj);

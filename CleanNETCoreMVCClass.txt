@@ -1089,3 +1089,39 @@ public class VillaRepository : IVillaRepository
     }
 }
 
+94 Add Form File In Villa Model
+- Add the following to the Villa Entity. NotMapped means it will
+  not be added to the DB:
+
+	[NotMapped]
+	public IFormFile? Image { get; set; }
+	
+- Add a new folder in wwwroot/images called "Villa"
+
+- In the Villa "Create" view:
+Change:
+
+	<div class="form-floating py-1 col-12">
+		<input asp-for="ImageUrl" class="form-control border shadow" />
+		<label asp-for="ImageUrl" class="ms-2"></label>
+		<span asp-validation-for="ImageUrl" class="text-danger"></span>
+	</div>
+
+To:
+
+	<div class="form-floating py-1 col-12">
+		<input asp-for="ImageUrl" hidden class="form-control border shadow" />
+		<input asp-for="Image" class="form-control border shadow" />
+		<label asp-for="ImageUrl" class="ms-2"></label>
+		<span asp-validation-for="ImageUrl" class="text-danger"></span>
+	</div>
+	
+- Also, add the following in the <form> tag:
+
+	 enctype="multipart/form-data"
+
+- In the VillaController, add dependency injection for IWebHostEnvironment:
+
+	private readonly IWebHostEnvironment _webHostEnvironment;
+
+
