@@ -1142,6 +1142,7 @@ To:
 		obj.ImageUrl = "https://placehold.co/600x400";
 	}
 
+98 Handle Image in Update Villa
 - In the Villa Update View:
 	- Split the content into col-10 and col-2 divs - old content in col-10 div, 
 	  Image in col-2 div
@@ -1201,6 +1202,11 @@ To:
 		<img src="@Model.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
 	</div>
 
+
+- In the Update View, and the enctype to the <form> tag:
+
+	<form method="post" class="row" enctype="multipart/form-data">
+	
 
 
 

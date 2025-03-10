@@ -108,6 +108,31 @@ namespace WhiteLagoon.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                if (obj.Image != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(obj.Image.FileName);
+                    string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, @"images\VillaImage");
+
+                    if (!string.IsNullOrEmpty(obj.ImageUrl))
+                    {
+                        var oldImageFile = Path.Combine(_webHostEnvironment.WebRootPath, obj.ImageUrl.TrimStart('\\'));
+
+                        if (System.IO.File.Exists(oldImageFile))
+                        {
+                            System.IO.File.Delete(oldImageFile);
+                        }
+                    }
+
+                    using var fileStream = new FileStream(Path.Combine(imagePath, fileName), FileMode.Create);
+
+                    obj.Image.CopyTo(fileStream);
+
+                    obj.ImageUrl = @"\images\VillaImage\" + fileName;
+
+                }
+
+
                 ////_db.Villas.Update(obj);
                 ////_db.SaveChanges();
                 //_villaRepo.Update(obj);
