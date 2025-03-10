@@ -54,12 +54,12 @@ namespace WhiteLagoon.Web.Controllers
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(obj.Image.FileName);
                     string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, @"images\VillaImage");
 
-                    using (var fileStream = new FileStream(Path.Combine(imagePath, fileName), FileMode.Create))
-                    {
-                        obj.Image.CopyTo(fileStream);
+                    using var fileStream = new FileStream(Path.Combine(imagePath, fileName), FileMode.Create);
 
-                        obj.ImageUrl =
-                    }
+                    obj.Image.CopyTo(fileStream);
+
+                    obj.ImageUrl = @"\images\VillaImage\" + fileName;
+
                     //string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
                     //string uniqueFileName = Guid.NewGuid().ToString() + "_" + obj.Image.FileName;
                     //string filePath = Path.Combine(uploadsFolder, uniqueFileName);

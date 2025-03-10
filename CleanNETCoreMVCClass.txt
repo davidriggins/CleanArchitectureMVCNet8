@@ -1089,7 +1089,7 @@ public class VillaRepository : IVillaRepository
     }
 }
 
-94 Add Form File In Villa Model
+94-97 Add Villa Image Logic
 - Add the following to the Villa Entity. NotMapped means it will
   not be added to the DB:
 
@@ -1124,4 +1124,84 @@ To:
 
 	private readonly IWebHostEnvironment _webHostEnvironment;
 
+- Change the logic in the if(ModelState.IsValid) of the Create [Post] in the VillaController:
 
+	if (obj.Image != null)
+	{
+		string fileName = Guid.NewGuid().ToString() + Path.GetExtension(obj.Image.FileName);
+		string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, @"images\VillaImage");
+
+		using var fileStream = new FileStream(Path.Combine(imagePath, fileName), FileMode.Create);
+
+		obj.Image.CopyTo(fileStream);
+
+		obj.ImageUrl = @"\images\VillaImage\" + fileName;
+
+	}
+	else {
+		obj.ImageUrl = "https://placehold.co/600x400";
+	}
+
+- In the Villa Update View:
+	- Split the content into col-10 and col-2 divs - old content in col-10 div, 
+	  Image in col-2 div
+	- Also, add Image and make ImageUrl 'hidden'
+	
+	<div class="col-10">
+		<div class="p-3">
+			<div asp-validation-summary="ModelOnly"></div>
+			@* <div asp-validation-summary="All"></div> *@
+
+			<div class="form-floating py-1 col-12">
+				<input asp-for="Name" class="form-control border shadow" />
+				<label asp-for="Name" class="ms-2"></label>
+				<span asp-validation-for="Name" class="text-danger"></span>
+			</div>
+			<div class="form-floating py-1 col-12">
+				<input asp-for="Description" class="form-control border shadow" />
+				<label asp-for="Description" class="ms-2"></label>
+				<span asp-validation-for="Description" class="text-danger"></span>
+			</div>
+			<div class="form-floating py-1 col-12">
+				<input asp-for="Price" class="form-control border shadow" />
+				<label asp-for="Price" class="ms-2"></label>
+				<span asp-validation-for="Price" class="text-danger"></span>
+			</div>
+			<div class="form-floating py-1 col-12">
+				<input asp-for="Sqft" class="form-control border shadow" />
+				<label asp-for="Sqft" class="ms-2"></label>
+				<span asp-validation-for="Sqft" class="text-danger"></span>
+			</div>
+			<div class="form-floating py-1 col-12">
+				<input asp-for="Occupancy" class="form-control border shadow" />
+				<label asp-for="Occupancy" class="ms-2"></label>
+				<span asp-validation-for="Occupancy" class="text-danger"></span>
+			</div>
+			<div class="form-floating py-1 col-12">
+				<input asp-for="Image" class="form-control border shadow" />
+				<input asp-for="ImageUrl" hidden class="form-control border shadow" />
+				<label asp-for="ImageUrl" class="ms-2"></label>
+				<span asp-validation-for="ImageUrl" class="text-danger"></span>
+			</div>
+			<div class="row pt-2">
+				<div class="col-6 col-md-3">
+					<button type="submit" class="btn btn-success w-100">
+						<i class="bi bi-check-circle"></i> Update
+					</button>
+				</div>
+				<div class="col-6 col-md-3">
+					<a asp-controller="Villa" asp-action="Index" class="btn btn-secondary w-100">
+						<i class="bi bi-x-circle"></i> Cancel
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-2">
+		<img src="@Model.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+	</div>
+
+
+
+
+- Check that Services (test results parses, test  are running properly, multiple times per day.
