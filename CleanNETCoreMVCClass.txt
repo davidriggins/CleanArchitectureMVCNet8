@@ -1301,3 +1301,8 @@ To:
 
 	add-migration AddAmenityToDb
 	update-database
+
+104 Amenity Repository
+- Add IAmenityRepository and AmenityRepository
+- Update IUnitOfWork and UnitOfWork for Amenity 
+
