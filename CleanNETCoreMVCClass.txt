@@ -1309,3 +1309,8 @@ To:
 105 Amenity Controller
 - Create AmenityController
 - Create AmenityVM
+
+106 Amenity List
+- Add Link for Amenity in _Layout
+- Create the Amenity Index View
+
