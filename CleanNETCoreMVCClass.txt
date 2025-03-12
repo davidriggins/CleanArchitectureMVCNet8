@@ -1444,3 +1444,10 @@ To:
 - Make modifications to it to make it dynamic.
 - Add some images for the Villas (via Edit).
 
+118 Partial View.
+- In the Views/Shared folder, create a new View called _VillaDetail
+- Cut and paste the contents of the Modal Body in the Home Index View into the _VillaDetail partial view
+
+- Add the following to the Modal Body in the Home Index View:
+
+	<partial name="_VillaDetail" model="@villa" />
