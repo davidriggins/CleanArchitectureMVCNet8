@@ -1314,3 +1314,6 @@ To:
 - Add Link for Amenity in _Layout
 - Create the Amenity Index View
 
+107 Amenity CRUD
+- Create Amenity Create, Delete and Update Views
+
