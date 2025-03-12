@@ -1293,3 +1293,11 @@ To:
 	public DbSet<Amenity> Amenities { get; set; }
 
 - Add seed data in the ApplicationDbContext
+
+103 Create Amenity Table
+- Open the Package Manager Console
+- Select the WhiteLagoon.Infrastructure project
+- Add the table
+
+	add-migration AddAmenityToDb
+	update-database
