@@ -1393,7 +1393,7 @@ To:
 	}
 
 111 Load Villa Amenities
-- Add the following to the Villa Entity
+- Add the following Navigation property to the Villa Entity
 
 	[ValidateNever]
 	public IEnumerable<Amenity> VillaAmenity { get; set; }
@@ -1402,3 +1402,7 @@ To:
 
 	VillaList = _unitOfWork.Villa.GetAll(includeProperties: "VillaAmenity"),
 	
+112 Home Page UI
+- Copy the content of the course code to the Home Index View
+- Remove a couple of styling items from _layout
+
