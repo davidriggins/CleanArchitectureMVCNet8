@@ -1370,3 +1370,35 @@ To:
 109 Home View Model
 - Create a HomeVM
 
+110 Index Action Home Controller
+- Update the HomeController:
+
+	private readonly IUnitOfWork _unitOfWork;
+
+	public HomeController(IUnitOfWork unitOfWork)
+	{
+		_unitOfWork = unitOfWork;
+	}
+
+	public IActionResult Index()
+	{
+		HomeVM homeVM = new()
+		{
+			VillaList = _unitOfWork.Villa.GetAll(),
+			Nights = 1,
+			CheckInDate = DateOnly.FromDateTime(DateTime.Now),
+		};
+
+		return View(homeVM);
+	}
+
+111 Load Villa Amenities
+- Add the following to the Villa Entity
+
+	[ValidateNever]
+	public IEnumerable<Amenity> VillaAmenity { get; set; }
+
+- Add includeProperties the GetAll call in the HomeController Index Action
+
+	VillaList = _unitOfWork.Villa.GetAll(includeProperties: "VillaAmenity"),
+	
