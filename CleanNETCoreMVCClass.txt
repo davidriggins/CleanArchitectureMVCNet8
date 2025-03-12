@@ -1272,5 +1272,24 @@ To:
         }
     }
 
+102 Create Amenity Model
+- Create a new class called Amenity in the Entities folder
 
-- Check that Services (test results parses, test  are running properly, multiple times per day.
+	 [Key]
+	 public int Id { get; set; }
+
+	 public required string Name { get; set; }
+	 public string? Description { get; set; }
+
+
+	 [ForeignKey("Villa")]
+	 public int VillaId { get; set; }
+
+	 [ValidateNever]
+	 public Villa Villa { get; set; }
+	 
+- Add the following DbSet in the ApplicationDbContext
+
+	public DbSet<Amenity> Amenities { get; set; }
+
+- Add seed data in the ApplicationDbContext
