@@ -1436,3 +1436,11 @@ To:
 -to
 
 	exampleModal-@(villa.Id)
+	
+116 Villa Details Modal
+- Copy the content of the course code for the villa details to the Home Index View 
+  Copy it to where it says Villa Details
+
+- Make modifications to it to make it dynamic.
+- Add some images for the Villas (via Edit).
+
