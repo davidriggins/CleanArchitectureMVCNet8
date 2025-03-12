@@ -1367,3 +1367,6 @@ To:
 
 - Remove the Privacy link in the _Layout.
 
+109 Home View Model
+- Create a HomeVM
+
