@@ -1406,3 +1406,16 @@ To:
 - Copy the content of the course code to the Home Index View
 - Remove a couple of styling items from _layout
 
+113 Bind HomeVM
+- Change the <input tag for Check In Date of the Home Index View:
+
+	<input asp-for="CheckInDate" type="date" class="form-control" />
+	
+- Change the select for No. of nights in the Home Index View:
+
+	<select class="form-select">
+		@for(var i = 1; i < 11; i++)
+		{
+			<option value="@i">@i</option>
+		}
+	</select>
