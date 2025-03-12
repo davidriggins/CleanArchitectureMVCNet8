@@ -1426,3 +1426,13 @@ To:
 
 - Create @foreach loop in the Home Index View to loop though the Villa List
 - Make edits to display dynamic data
+
+
+115 Dynamic Modal Id
+- Change the following (2 places) in the Home Index View:
+
+	exampleModal-@(11)
+
+-to
+
+	exampleModal-@(villa.Id)
