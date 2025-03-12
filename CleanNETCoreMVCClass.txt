@@ -1317,3 +1317,53 @@ To:
 107 Amenity CRUD
 - Create Amenity Create, Delete and Update Views
 
+108 Add DropDown Navbar
+- Go to getbootstrap.com
+- Go to Docs and search for Navbar
+- In the first dropdown example, copy the dropdown <li> content
+
+	<li class="nav-item dropdown">
+	  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+		Dropdown
+	  </a>
+	  <ul class="dropdown-menu">
+		<li><a class="dropdown-item" href="#">Action</a></li>
+		<li><a class="dropdown-item" href="#">Another action</a></li>
+		<li><hr class="dropdown-divider"></li>
+		<li><a class="dropdown-item" href="#">Something else here</a></li>
+	  </ul>
+	</li>
+	
+- Replace the existing nav-list items for Villa, VillaNumber and Amenity in _Layout
+  Change them to dropdown-itmes and use them in the list as follows:
+  
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Content Management
+    </a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" asp-area="" asp-controller="Villa" asp-action="Index">Villa</a></li>
+        <li><a class="dropdown-item" asp-area="" asp-controller="VillaNumber" asp-action="Index">VillaNumber</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" asp-area="" asp-controller="Amenity" asp-action="Index">Amenity</a></li>
+    </ul>
+</li>
+
+- Replace the existing bootstrap.min.js with the bootstrap.bundle.min.js (in Layout) from bootstrap CDN
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	
+	- Remove the following CSS code from _Layout.cshtml.css
+	
+	a.navbar-brand {
+	  white-space: normal;
+	  text-align: center;
+	  word-break: break-all;
+	}
+
+	a {
+	  color: #0077cc;
+	}
+
+- Remove the Privacy link in the _Layout.
+
