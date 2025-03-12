@@ -1306,3 +1306,6 @@ To:
 - Add IAmenityRepository and AmenityRepository
 - Update IUnitOfWork and UnitOfWork for Amenity 
 
+105 Amenity Controller
+- Create AmenityController
+- Create AmenityVM
