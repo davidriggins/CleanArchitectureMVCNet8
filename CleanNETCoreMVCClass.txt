@@ -1419,3 +1419,10 @@ To:
 			<option value="@i">@i</option>
 		}
 	</select>
+
+114 Home UI - Display All Villas
+- Copy the content of the course code for the villa list to the Home Index View: 
+  Copy it right before the end <form> tag
+
+- Create @foreach loop in the Home Index View to loop though the Villa List
+- Make edits to display dynamic data
