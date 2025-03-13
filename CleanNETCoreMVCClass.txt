@@ -1499,3 +1499,8 @@ To:
 
 	add-migration AddPropertiesToUsersTable
 	update-database
+	
+122 Login and Register VM
+- Create a new class called LoginVM in ViewModels
+- Create another class called RegisterVM in ViewModels
+
