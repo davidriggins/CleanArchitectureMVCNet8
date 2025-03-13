@@ -1551,3 +1551,21 @@ To:
 	<a class="nav-link" asp-controller="Account" asp-action="Register">Register</a>
 	
 	<a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+	
+125 Login Get Action
+- Set up the Login Action in the AccountController:
+
+	public IActionResult Login(string returnUrl=null)
+	{
+		// If the returnUrl is not empty, set it to the returnUrl,
+		// otherwise set it to the root URL
+		returnUrl ??= Url.Content("~/");
+
+		LoginVM loginVM = new ()
+		{
+			RedirectUrl = returnUrl
+		};
+
+		return View(loginVM);
+	}
+

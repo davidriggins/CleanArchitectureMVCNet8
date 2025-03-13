@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WhiteLagoon.Application.Common.Interfaces;
 using WhiteLagoon.Domain.Entities;
+using WhiteLagoon.Web.ViewModels;
 
 namespace WhiteLagoon.Web.Controllers
 {
@@ -24,9 +25,18 @@ namespace WhiteLagoon.Web.Controllers
         }
 
 
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl=null)
         {
-            return View();
+            // If the returnUrl is not empty, set it to the returnUrl,
+            // otherwise set it to the root URL
+            returnUrl ??= Url.Content("~/");
+
+            LoginVM loginVM = new ()
+            {
+                RedirectUrl = returnUrl
+            };
+
+            return View(loginVM);
         }
 
         public IActionResult Register()
