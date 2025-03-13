@@ -1516,3 +1516,38 @@ To:
 		</li>
 	</ul>
 
+124 Add Account Controller and Inject Helper
+- Create a new Controller Called "AccountController"
+
+	private readonly IUnitOfWork _unitOfWork;
+	private readonly UserManager<ApplicationUser> _userManager;
+	private readonly SignInManager<ApplicationUser> _signInManager;
+	private readonly RoleManager<IdentityRole> _roleManager;
+
+	public AccountController(IUnitOfWork unitOfWork,
+		UserManager<ApplicationUser> userManager,
+		SignInManager<ApplicationUser> signInManager,
+		RoleManager<IdentityRole> roleManager)
+	{
+		_unitOfWork = unitOfWork;
+		_userManager = userManager;
+		_signInManager = signInManager;
+		_roleManager = roleManager;
+	}
+
+
+	public IActionResult Login()
+	{
+		return View();
+	}
+
+	public IActionResult Register()
+	{
+		return View();
+	}
+
+- Change the nav-links in _LoginPartial View
+
+	<a class="nav-link" asp-controller="Account" asp-action="Register">Register</a>
+	
+	<a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
