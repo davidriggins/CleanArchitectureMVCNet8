@@ -1600,3 +1600,31 @@ To:
 
 		return View();
 	}
+
+128 Retrieve Roles in DropDown
+- Add the following properties to the RegisterVM
+
+	public string? Role { get; set; }
+	
+	[ValidateNever]
+	public IEnumerable<SelectListItem>? RoleList { get; set; }
+
+- Add the following to the Register Action in the AccountController:
+
+	RegisterVM registerVM = new()
+	{
+		RoleList = _roleManager.Roles.Select(x => new SelectListItem
+		{
+			Text = x.Name,
+			Value = x.Name
+		})
+	};
+
+	return View(registerVM);
+
+- Add the model to the Register View
+
+	@model RegisterVM
+
+- Bind the content
+- Add validation
