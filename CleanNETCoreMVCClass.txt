@@ -1464,3 +1464,13 @@ To:
 	// Add Identity
 	builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 		.AddEntityFrameworkStores<ApplicationDbContext>();
+
+120 Create Identity Tables
+- In the ApplicationDbContext, uncomment the following line in the OnModelCreating override
+
+	base.OnModelCreating(modelBuilder);
+	
+- Open the Package Manager Console for WhietLagoon.Infrastructure
+
+	add-migration AddIdentityToDb
+	update-database
