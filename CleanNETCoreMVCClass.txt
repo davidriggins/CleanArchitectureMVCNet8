@@ -1569,3 +1569,18 @@ To:
 		return View(loginVM);
 	}
 
+126 Login UI
+- Right-click on the Login action in the AccountController and Create a new Login View
+- Copy the content of the course code for the login to the Login View
+- Add the following to the top:
+
+	@model LoginVM
+
+- Bind the content
+- Add validation
+- Add Validation Script Partial
+
+	@section Scripts {
+		<partial name="_ValidationScriptsPartial" />
+	}
+
