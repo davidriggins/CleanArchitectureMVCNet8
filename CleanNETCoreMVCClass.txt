@@ -1474,3 +1474,28 @@ To:
 
 	add-migration AddIdentityToDb
 	update-database
+	
+121 Add more Columns to Users Table
+- Create a new Entity called ApplicationUser that inherits from IdentityUser
+- Change the ApplicationDbContext class definition to:
+
+	public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+	
+- Add a DbSet in ApplicationDbContext
+
+	public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+- In Program file, change:
+
+	builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+		.AddEntityFrameworkStores<ApplicationDbContext>();
+
+To:
+
+	builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+		.AddEntityFrameworkStores<ApplicationDbContext>();
+
+- Open the Package Manager Console for WhietLagoon.Infrastructure
+
+	add-migration AddPropertiesToUsersTable
+	update-database
