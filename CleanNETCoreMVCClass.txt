@@ -1584,3 +1584,19 @@ To:
 		<partial name="_ValidationScriptsPartial" />
 	}
 
+127 Add Roles in Table
+- Right-click on the Register action in the AccountController and Create a new Register View
+- Copy the content of the course code for the register to the Register View
+- Setup the Register Action in the AccountController
+
+	public IActionResult Register()
+	{
+		//if (!_roleManager.RoleExistsAsync("Admin").Result)
+		if (!_roleManager.RoleExistsAsync("Admin").GetAwaiter().GetResult())
+		{ 
+			_roleManager.CreateAsync(new IdentityRole("Admin")).Wait();
+			_roleManager.CreateAsync(new IdentityRole("Customer")).Wait();
+		}
+
+		return View();
+	}
