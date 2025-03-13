@@ -1451,3 +1451,16 @@ To:
 - Add the following to the Modal Body in the Home Index View:
 
 	<partial name="_VillaDetail" model="@villa" />
+
+
+119 Add Identity to the Application
+- In the ApplicationDbContext, instead of having the class extend from DbContext:
+
+	public class ApplicationDbContext : IdentityDbContext
+	
+- Install the Microsoft.AspNetCore.Identity.EntityFrameworkCore NuGet package in WhiteLagoon.Infrastructure
+- Add the following to the Program.cs file:
+
+	// Add Identity
+	builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+		.AddEntityFrameworkStores<ApplicationDbContext>();
