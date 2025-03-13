@@ -1734,3 +1734,9 @@ To:
 		return View(loginVM);
 
 	}
+
+132 Register in Action
+- Test Registration for Admin
+	cessna777@gmail.com
+	Admin123*
+	
