@@ -1841,3 +1841,39 @@ To:
 	{
 		option.Password.RequiredLength = 6;
 	});
+
+140 Return URL
+- Add the following below the <form> tag in the Login View:
+  This will fix one issue with redirectUrl
+
+	<input asp-for="RedirectUrl" hidden />
+	
+- Change to the following (add asp-route-returnUrl) in the Login View:
+
+	 <a asp-controller="Account" asp-action="Register" asp-route-returnUrl="@Model.RedirectUrl">Register as a new user</a>
+
+- Add variable to the Register Get Action in AccountController:
+
+	public IActionResult Register(string returnUrl = null)
+
+- Add the following line to the Register Get Action in AccountController
+
+	returnUrl ??= Url.Content("~/");
+
+- Add the following line to the Register Get Action in AccountController
+  To set RedirectUrl = returnUrl
+  
+RegisterVM registerVM = new()
+{
+    RoleList = _roleManager.Roles.Select(x => new SelectListItem
+    {
+        Text = x.Name,
+        Value = x.Name
+    }),
+    RedirectUrl = returnUrl
+};
+
+- Add the following below the <form> tag in the Register View:
+  This will fix one issue with redirectUrl
+
+	<input asp-for="RedirectUrl" hidden />

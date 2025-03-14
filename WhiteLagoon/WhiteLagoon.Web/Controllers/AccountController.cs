@@ -87,8 +87,10 @@ namespace WhiteLagoon.Web.Controllers
         }
 
 
-        public IActionResult Register()
+        public IActionResult Register(string returnUrl = null)
         {
+            returnUrl ??= Url.Content("~/");
+
             //if (!_roleManager.RoleExistsAsync("Admin").Result)
             if (!_roleManager.RoleExistsAsync(SD.Role_Admin).GetAwaiter().GetResult())
             { 
@@ -102,7 +104,8 @@ namespace WhiteLagoon.Web.Controllers
                 {
                     Text = x.Name,
                     Value = x.Name
-                })
+                }),
+                RedirectUrl = returnUrl
             };
 
             return View(registerVM);
