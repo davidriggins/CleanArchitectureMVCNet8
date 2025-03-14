@@ -17,7 +17,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(option=>
 // Add Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
-    //.AddDefaultTokenProviders();
+//.AddDefaultTokenProviders();
+
+// Example of Configuring Application Cookie to override the default cookie settings
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/AccessDenied";
+});
 
 //builder.Services.AddScoped<IVillaRepository, VillaRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

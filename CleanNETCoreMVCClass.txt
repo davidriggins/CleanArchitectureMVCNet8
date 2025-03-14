@@ -1811,3 +1811,13 @@ To:
 	[Authorize]
 	
 - That means you have to be logged in to use the methods in the controller
+
+137 Configuring Application Cookie
+- Add this to the Program file:
+
+	// Example of Configuring Application Cookie to override the default cookie settings
+	builder.Services.ConfigureApplicationCookie(options =>
+	{
+		options.LoginPath = "/Account/Login";
+		options.AccessDeniedPath = "/Account/AccessDenied";
+	});
