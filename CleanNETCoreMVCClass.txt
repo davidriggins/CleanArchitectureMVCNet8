@@ -1780,3 +1780,22 @@ To:
 
 		return RedirectToAction("Index", "Home");
 	}
+
+135 Access Denied UI
+- Create a Customer Account
+	davidpaysthebills@gmail.com
+	Customer123*
+
+- Create a AccessDenied endpoint in AccountController
+
+	public IActionResult AccessDenied()
+	{
+		return View();
+	}
+
+- Create a View called "AccessDenied"
+
+	<div class="container pt-2">
+		<img src="~/images/accessDenied.jpg" width="100%" />
+	</div>
+

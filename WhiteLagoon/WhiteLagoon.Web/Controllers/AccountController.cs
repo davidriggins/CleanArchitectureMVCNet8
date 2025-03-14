@@ -81,6 +81,12 @@ namespace WhiteLagoon.Web.Controllers
         }
 
 
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+
         public IActionResult Register()
         {
             //if (!_roleManager.RoleExistsAsync("Admin").Result)
