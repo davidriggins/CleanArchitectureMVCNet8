@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Threading.Tasks;
 using WhiteLagoon.Application.Common.Interfaces;
 using WhiteLagoon.Application.Common.Utility;
 using WhiteLagoon.Domain.Entities;
@@ -68,6 +69,15 @@ namespace WhiteLagoon.Web.Controllers
 
             return View(loginVM);
 
+        }
+
+
+        public async Task<IActionResult> Logout()
+        {
+
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction("Index", "Home");
         }
 
 

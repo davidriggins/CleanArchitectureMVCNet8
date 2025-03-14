@@ -1753,7 +1753,7 @@ To:
 		@if (SignInManager.IsSignedIn(User))
 		{
 			<li class="nav-item">
-				<a class="nav-link" asp-controller="Account" asp-action="Register">Hello, @UserManager.GetUserName(User)</a>
+				<a class="nav-link" href="#">Hello, @UserManager.GetUserName(User)</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" asp-controller="Account" asp-action="Logout">Logout</a>
@@ -1769,3 +1769,14 @@ To:
 			</li>
 		}
 	</ul>
+
+134 Logout in Action
+- Create a Logout endpoint in AccountController
+
+	public async Task<IActionResult> Logout()
+	{
+
+		await _signInManager.SignOutAsync();
+
+		return RedirectToAction("Index", "Home");
+	}
