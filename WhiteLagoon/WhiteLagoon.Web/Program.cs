@@ -26,6 +26,12 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Account/AccessDenied";
 });
 
+// Set customized password options
+builder.Services.Configure<IdentityOptions>(option =>
+{
+    option.Password.RequiredLength = 6;
+});
+
 //builder.Services.AddScoped<IVillaRepository, VillaRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 

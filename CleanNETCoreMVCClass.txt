@@ -1821,3 +1821,23 @@ To:
 		options.LoginPath = "/Account/Login";
 		options.AccessDeniedPath = "/Account/AccessDenied";
 	});
+
+138 Modify Default Password Requirements
+- In the AccountController for the Register HttpPost endpoint, wrap the appropriate
+  section with:
+  
+	if (ModelState.IsValid)
+
+- Add the following to the end of the Register View:
+
+	@section Scripts {
+		<partial name="_ValidationScriptsPartial" />
+	}
+	
+- In the Program file, add:
+
+	// Set customized password options
+	builder.Services.Configure<IdentityOptions>(option =>
+	{
+		option.Password.RequiredLength = 6;
+	});
