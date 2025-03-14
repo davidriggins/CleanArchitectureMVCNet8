@@ -1842,7 +1842,7 @@ To:
 		option.Password.RequiredLength = 6;
 	});
 
-140 Return URL
+140 Fix Return URL issues
 - Add the following below the <form> tag in the Login View:
   This will fix one issue with redirectUrl
 
@@ -1877,3 +1877,54 @@ RegisterVM registerVM = new()
   This will fix one issue with redirectUrl
 
 	<input asp-for="RedirectUrl" hidden />
+	
+==========Section 12 Villa Availability==========
+
+141 Add Villa Availability
+- Add the following property to the Villa Entity
+
+	[NotMapped]
+	public bool IsAvailable { get; set; } = true;
+	
+- Create the Index Post action Method in the HomeController
+
+	[HttpPost]
+	public IActionResult Index(HomeVM homeVM)
+	{
+		homeVM.VillaList = _unitOfWork.Villa.GetAll(includeProperties: "VillaAmenity");
+
+		foreach (var villa in homeVM.VillaList)
+		{
+			if (villa.Id % 2 == 0)
+			{
+				villa.IsAvailable = false;
+			}
+		}
+
+		return View(homeVM);
+	}
+
+- In the Home Index View, change the button type to Submit for the dropdown
+
+	<button type="submit" class="btn btn-success btn-block">
+	
+- Add the following logic around the Book button in the Home Index View
+
+	<div class="col-4">
+		@if (Model.CheckInDate >= DateOnly.FromDateTime(DateTime.Now))
+		{
+			if (villa.IsAvailable)
+			{
+				<a class="btn btn-success form-control btn-block">
+					Book
+				</a>
+			}
+			else
+			{
+				<a class="btn btn-outline-danger disabled form-control btn-block">
+					Sold Out
+				</a>
+			}
+			
+		}
+	</div>

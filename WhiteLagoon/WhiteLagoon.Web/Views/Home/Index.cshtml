@@ -48,7 +48,7 @@
 
             <div class="col-4 col-md-2 pt-4 pr-2">
                 <div class="form-group">
-                    <button type="button" class="btn btn-success btn-block">
+                    <button type="submit" class="btn btn-success btn-block">
                         <i class="bi bi-search"></i>  &nbsp; Check Availability
                     </button>
 
@@ -63,30 +63,43 @@
                 @foreach(var villa in Model.VillaList)
                 {
                     <div class="p-4 col-md-12 col-lg-6">
-                    <div class="row" style="border-radius:5px; border: 1px solid #aaa">
-                        <div class="col-4 p-2">
-                            <img class="d-block w-100" style="border-radius:5px;" src="@villa.ImageUrl">
-                        </div>
-                        <div class="col-8">
-                            <div class="d-flex justify-content-between">
-                                <p class="card-title text-warning" style="font-size:xx-large">@villa.Name</p>
-                                <div class="pt-2">
-                                    <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target='#exampleModal-@(villa.Id)'>
-                                        Details
-                                    </button>
-                                </div>
+                        <div class="row" style="border-radius:5px; border: 1px solid #aaa">
+                            <div class="col-4 p-2">
+                                <img class="d-block w-100" style="border-radius:5px;" src="@villa.ImageUrl">
                             </div>
-                            <p class="card-text">
-                                @Html.Raw(villa.Description)
-                            </p>
-                        </div>
-                        <div class="col-12">
-                            <div class="row pb-3 pt-2">
-                                <div class="col-4">
-                                    <a class="btn btn-success form-control btn-block">
-                                        Book
-                                    </a>
+                            <div class="col-8">
+                                <div class="d-flex justify-content-between">
+                                    <p class="card-title text-warning" style="font-size:xx-large">@villa.Name</p>
+                                    <div class="pt-2">
+                                        <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target='#exampleModal-@(villa.Id)'>
+                                            Details
+                                        </button>
+                                    </div>
                                 </div>
+                                <p class="card-text">
+                                    @Html.Raw(villa.Description)
+                                </p>
+                            </div>
+                            <div class="col-12">
+                                <div class="row pb-3 pt-2">
+                                    <div class="col-4">
+                                        @if (Model.CheckInDate >= DateOnly.FromDateTime(DateTime.Now))
+                                        {
+                                            if (villa.IsAvailable)
+                                            {
+                                                <a class="btn btn-success form-control btn-block">
+                                                    Book
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-outline-danger disabled form-control btn-block">
+                                                    Sold Out
+                                                </a>
+                                            }
+                                            
+                                        }
+                                    </div>
                                 <div class="col-4">
                                     <span class="">Max Occupancy : @villa.Occupancy adults </span><br />
                                     <span class=" pt-1">Villa Size : @villa.Sqft sqft</span><br />
