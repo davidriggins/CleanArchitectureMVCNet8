@@ -1799,3 +1799,15 @@ To:
 		<img src="~/images/accessDenied.jpg" width="100%" />
 	</div>
 
+136 Authorization with Roles
+- In the AmenityController, add the following above the controller class:
+
+	[Authorize(Roles = SD.Role_Admin)]
+	
+- That only authorizes Admins to use the methods in the controller
+
+- In the VillaController, add the following above the controller class:
+
+	[Authorize]
+	
+- That means you have to be logged in to use the methods in the controller
