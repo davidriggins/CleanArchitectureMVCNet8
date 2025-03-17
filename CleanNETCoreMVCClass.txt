@@ -1928,3 +1928,9 @@ RegisterVM registerVM = new()
 			
 		}
 	</div>
+
+142 Show availability only in the future.
+- In the Home Index View, change the following from >= to >
+
+	@if (Model.CheckInDate > DateOnly.FromDateTime(DateTime.Now))
+
