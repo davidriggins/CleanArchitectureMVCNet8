@@ -2027,3 +2027,45 @@ RegisterVM registerVM = new()
 				});
 			}
     </script>
+
+146 Spinner in Action
+- Right-click on the css folder in wwwroot and click Add->New Item
+- Add a Style Sheet called spinner.css
+- Copy the content of the course code for the spinner to the spinner.css
+- Add a <div tag to the _Layout View in <main
+
+	<div class="loading spinner" style="display:none;"></div>
+	
+- Add the following <link tag at the bottom of the <link tag section in the _Layout View
+
+	<link rel="stylesheet" href="~/css/spinner.css" />
+
+- Change the ajax function call to show and hide the spinner.  Also, 
+  add failure and error cases:
+  
+	function fnLoadVillaList() {
+		$('.spinner').show();
+		var objData = {
+			checkInDate: $("#CheckInDate").val(),
+			nights: $("#Nights").val()
+		};
+
+		$.ajax({
+			type: "POST",
+			data: objData,
+			url: "@Url.Action("GetVillasByDate", "Home")",
+			success: function (data) {
+				$("#VillasList").empty();
+				$("#VillasList").html(data);
+				$('.spinner').hide();
+			},
+			failure: function (response) {
+				$('.spinner').hide();
+				alert(response.responseText);
+			},
+			error: function (response) {
+				$('.spinner').hide();
+				alert(response.responseText);
+			}
+		});
+	}
