@@ -2207,3 +2207,18 @@ and
 150 Clean Up
 - Remove the [HttpPost] Home Index method (no longer needed.
 - Add [HttpPost] to Home GetVillasByDate method
+
+151 Call Finalize Booking Action
+- Add asp-controller and asp-action to Book button in _VillaList as
+  well as the arguments required
+
+	<a asp-controller="Booking" asp-action="FinalizeBooking" 
+	 asp-route-villaId="@villa.Id"
+	 asp-route-checkInDate="@Model.CheckInDate"
+	 asp-route-nights="@Model.Nights"
+	 class="btn btn-success form-control btn-block">
+		Book
+	</a>
+
+- Create a FinalizeBooking View (e.g. from the FinalizeBooking method in the BookingController)
+- Copy the content of the course code for the Finalize Booking to the FinalizeBooking View
