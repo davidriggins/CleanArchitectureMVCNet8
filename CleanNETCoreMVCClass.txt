@@ -1934,3 +1934,34 @@ RegisterVM registerVM = new()
 
 	@if (Model.CheckInDate > DateOnly.FromDateTime(DateTime.Now))
 
+143 Move Villa List to Partial View
+- Add the following ActionResult method in the HomeController:
+
+	public IActionResult GetVillaByDate(int nights, DateOnly checkInDate)
+	{
+		var villaList = _unitOfWork.Villa.GetAll(includeProperties: "VillaAmenity").ToList();
+
+		foreach (var villa in villaList)
+		{
+			if (villa.Id % 2 == 0)
+			{
+				villa.IsAvailable = false;
+			}
+		}
+
+		HomeVM homeVM = new()
+		{
+			CheckInDate = checkInDate,
+			VillaList = villaList,
+			Nights = nights
+		};
+
+		return View(homeVM);
+	}
+
+- Cut the content of VillaList <div> in the Home Index View into a new partial View called "_VillaList"
+- Add the partial view to the Home Index View where the original code was removed:
+
+	<partial name="_VillaList" model="Model"/>
+
+
