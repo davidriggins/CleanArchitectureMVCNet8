@@ -2274,3 +2274,5 @@ With
 	public IApplicationUserRepository ApplicationUser { get; private set; }
 
 	ApplicationUser = new ApplicationUserRepository(_db);
+
+154 Load User Details
