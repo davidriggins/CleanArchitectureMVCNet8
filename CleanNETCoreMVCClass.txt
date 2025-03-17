@@ -2247,3 +2247,30 @@ With
 
 - Fix the bindings in the FinalizeBooking View
 
+153 Add ApplicationUser Repository
+- Create an IApplicationUserRepository:
+
+	public interface IApplicationUserRepository : IRepository<ApplicationUser>
+	{
+	}
+
+- Add it to IUnitOfWork:
+
+	IApplicationUserRepository ApplicationUser { get; }
+	
+- Create an ApplicationUser Repository
+
+	public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicationUserRepository
+	{
+		private readonly ApplicationDbContext _db;
+		public ApplicationUserRepository(ApplicationDbContext db) : base(db)
+		{
+			_db = db;
+		}
+	}
+
+- Add the following to UnitOfWorkRepository:
+
+	public IApplicationUserRepository ApplicationUser { get; private set; }
+
+	ApplicationUser = new ApplicationUserRepository(_db);
