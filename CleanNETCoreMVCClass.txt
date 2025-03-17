@@ -2222,3 +2222,28 @@ and
 
 - Create a FinalizeBooking View (e.g. from the FinalizeBooking method in the BookingController)
 - Copy the content of the course code for the Finalize Booking to the FinalizeBooking View
+
+152 Finalize Booking Dynamic UI
+- Add controller and action to the Modify Selection button in the FinalizeBooking View
+
+	<a 
+		asp-controller="Home"
+		asp-action="Index" 
+		class="btn btn-sm btn-outline-danger" style="width:200px;">
+		<i class="bi bi-arrow-left-square"></i> &nbsp; Modify Selection
+	</a>
+
+- In the FinalizeBooking View, replace:
+
+	~~VILLA DETAILS HERE~~
+
+With
+
+	<partial name="_VillaDetail" model="@Model.Villa" />
+
+- Add the following in the FinalizeBooking Action Method in BookingController:
+
+	booking.TotalCost = booking.Villa.Price * nights;
+
+- Fix the bindings in the FinalizeBooking View
+
