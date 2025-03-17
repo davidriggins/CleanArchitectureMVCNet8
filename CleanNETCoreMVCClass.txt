@@ -2204,3 +2204,6 @@ and
 		}
 	}
 
+150 Clean Up
+- Remove the [HttpPost] Home Index method (no longer needed.
+- Add [HttpPost] to Home GetVillasByDate method
