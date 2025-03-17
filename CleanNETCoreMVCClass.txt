@@ -1988,3 +1988,42 @@ RegisterVM registerVM = new()
 	<form method="post" style="background-color:black"
 		asp-action="GetVillaByDate" data-ajax-method="post" data-ajax="true"
 		data-ajax-mode="replace" data-ajax-update="#VillasList">
+
+145 Without Unobtrusive Library
+- Comment out the ajax library put in the _Layout view in previous section
+- Return the <form tag in the Home Index View to:
+
+	<form method="post" style="background-color:black"
+		  asp-action="GetVillasByDate" >
+		 
+- Change the Submit button in the Home Index View:
+
+	<button type="button" onclick="fnLoadVillaList()" class="btn btn-success btn-block">
+		<i class="bi bi-search"></i>  &nbsp; Check Availability
+	</button>
+
+- Add the asp-for item to the <select tag:
+
+	<select class="form-select" asp-for="Nights" >
+	
+- Add the section for ajax call:
+
+	@section scripts {
+		<script>
+			function fnLoadVillaList() {
+				var objData = {
+					checkInDate: $("#CheckInDate").val(),
+					nights: $("#Nights").val()
+				};
+
+				$.ajax({
+					type: "POST",
+					data: objData,
+					url: "@Url.Action("GetVillasByDate", "Home")",
+					success: function (data) {
+						$("#VillasList").empty();
+						$("#VillasList").html(data);
+					}
+				});
+			}
+    </script>
