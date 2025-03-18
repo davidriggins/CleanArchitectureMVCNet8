@@ -2618,6 +2618,46 @@ With
 
 	<li><a class="dropdown-item" asp-area="" asp-controller="Booking" asp-action="Index">Booking</a></li>
 
+166 End Point for Data Table
+- Go to datatables.net
+- Use the CDN 
+- Create the following <link>
+
+	<link rel="stylesheet" href="//cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css" />
+	
+- Create the <script using the js
+
+	<script src="//cdn.datatables.net/2.2.2/js/dataTables.min.js" asp-append-version="true"></script>
+
+- Add the following to the end of BookingController:
+
+	#region API Calls
+
+	[HttpGet]
+	[Authorize]
+	public IActionResult GetAll()
+	{
+		IEnumerable<Booking> objBookings;
+
+		if (User.IsInRole(SD.Role_Admin))
+		{
+			objBookings = _unitOfWork.Booking.GetAll(includeProperties: "User,Villa");
+		}
+		else
+		{
+			var claimsIdentity = (ClaimsIdentity)User.Identity;
+			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+			objBookings = _unitOfWork.Booking
+				.GetAll(u => u.UserId == userId, includeProperties: "User,Villa");
+		}
+
+		return Json(new { data = objBookings });
+	}
+	#endregion
+
+
+
 
 
 https://www.billingsclinic.com/careers/training-opportunities-for-students-seeking-health-care-experien/
