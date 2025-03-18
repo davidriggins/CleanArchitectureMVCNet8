@@ -2459,8 +2459,8 @@ With
 	{
 		LineItems = new List<SessionLineItemOptions>(),
 		Mode = "payment",
-		SuccessUrl = domain + $"/booking/BookingConfirmation?bookingId={booking.Id}.html",
-		CancelUrl = domain + $"/booking/FinalizeBooking?villaId={booking.VillaId}&checkInDate={booking.CheckInDate}&nights={booking.Nights}.html",
+		SuccessUrl = domain + $"booking/BookingConfirmation?bookingId={booking.Id}.html",
+		CancelUrl = domain + $"booking/FinalizeBooking?villaId={booking.VillaId}&checkInDate={booking.CheckInDate}&nights={booking.Nights}.html",
 	};
 
 	options.LineItems.Add(new SessionLineItemOptions
@@ -2484,3 +2484,61 @@ With
 
 	return new StatusCodeResult(303);
 
+163 Stripe In Action
+- Change the FinalizeBooking Post method i the BookingController to:
+
+	[Authorize]
+	[HttpPost]
+	public IActionResult FinalizeBooking(Booking booking)
+	{
+		var villa = _unitOfWork.Villa.Get(u=>u.Id == booking.VillaId);
+
+		booking.Status = SD.StatusPending;
+		booking.BookingDate = DateTime.Now;
+
+		booking.TotalCost = villa.Price * booking.Nights;
+
+		_unitOfWork.Booking.Add(booking);
+		_unitOfWork.Save();
+
+
+		var domain = Request.Scheme + "://" + Request.Host.Value + "/";
+		var options = new SessionCreateOptions
+		{
+			LineItems = new List<SessionLineItemOptions>(),
+			Mode = "payment",
+			SuccessUrl = domain + $"booking/BookingConfirmation?bookingId={booking.Id}.html",
+			CancelUrl = domain + $"booking/FinalizeBooking?villaId={booking.VillaId}&checkInDate={booking.CheckInDate}&nights={booking.Nights}.html",
+		};
+
+		options.LineItems.Add(new SessionLineItemOptions
+		{
+			PriceData = new SessionLineItemPriceDataOptions
+			{
+				UnitAmount = (long)(booking.TotalCost * 100),
+				Currency = "usd",
+				ProductData = new SessionLineItemPriceDataProductDataOptions
+				{
+					Name = villa.Name,
+				},
+			},
+			Quantity = 1,
+		});
+
+		var service = new SessionService();
+		Session session = service.Create(options);
+
+
+		_unitOfWork.Booking.UpdateStripePaymentID(booking.Id, session.Id, session.PaymentIntentId);
+		_unitOfWork.Save();
+
+		Response.Headers.Add("Location", session.Url);
+
+		return new StatusCodeResult(303);
+
+		//return RedirectToAction("BookingConfirmation", new { bookingId = booking.Id });
+	}
+
+
+
+https://www.billingsclinic.com/careers/training-opportunities-for-students-seeking-health-care-experien/
