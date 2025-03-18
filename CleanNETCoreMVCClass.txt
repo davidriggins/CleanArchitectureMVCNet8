@@ -2312,3 +2312,14 @@ With
 
 - Change the name ApplicationUser to User in multiple places.
 
+155 Booking Status
+- Add the following magic strings in the SD file:
+
+	public const string StatusPending = "Pending";
+	public const string StatusApproved = "Approved";
+	public const string StatusCheckedIn = "CheckedIn";
+	public const string StatusCompleted = "Completed";
+	public const string StatusCancelled = "Cancelled";
+	public const string StatusRefunded = "Refunded";
+
+
