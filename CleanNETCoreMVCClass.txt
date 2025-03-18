@@ -2276,3 +2276,39 @@ With
 	ApplicationUser = new ApplicationUserRepository(_db);
 
 154 Load User Details
+- Add the following at the top of the FinalizeBooking Action method in BookingController
+  so that only people who are logged in can access:
+  
+	[Authorize]
+
+- Change the FinalizeBooking Action Method in BookingController to get user identity
+
+	public IActionResult FinalizeBooking(int villaId, DateOnly checkInDate, int nights)
+	{
+		var claimsIdentity = (ClaimsIdentity)User.Identity;
+		var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+		ApplicationUser user = _unitOfWork.User.Get(u=>u.Id == userId);
+
+		Booking booking = new()
+		{
+			VillaId = villaId,
+			Villa = _unitOfWork.Villa.Get(u=>u.Id==villaId, includeProperties:"VillaAmenity"),
+			CheckInDate = checkInDate,
+			Nights = nights,
+			CheckOutDate = checkInDate.AddDays(nights),
+			UserId = userId,
+			Phone=user.PhoneNumber,
+			Email=user.Email,
+			Name = user.Name,
+		};
+
+		booking.TotalCost = booking.Villa.Price * nights;
+
+		return View(booking);
+	}
+	
+- You can supposedly inject the UserManager and get the user name
+
+- Change the name ApplicationUser to User in multiple places.
+
