@@ -19,7 +19,9 @@ function loadDataTable() {
             { data: 'email', "width": "5%" },
             { data: 'status', "width": "5%" },
             { data: 'checkindate', "width": "5%" },
-            { data: 'nights', "width": "5%" }
+            { data: 'nights', "width": "5%" },
+            { data: 'total', "width": "5%" },
+            { data: 'misc', "width": "5%" },
         ]
     });
 }

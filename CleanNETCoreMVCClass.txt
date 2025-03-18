@@ -2576,6 +2576,7 @@ With
 165 Empty Booking List UI
 - Add the Index Action method to the BookingController
 
+	[Authorize]
 	public IActionResult Index()
 	{
 		return View();
