@@ -1877,8 +1877,10 @@ RegisterVM registerVM = new()
   This will fix one issue with redirectUrl
 
 	<input asp-for="RedirectUrl" hidden />
-	
+
+=================================================	
 ==========Section 12 Villa Availability==========
+=================================================
 
 141 Add Villa Availability
 - Add the following property to the Villa Entity
@@ -2565,6 +2567,57 @@ With
 
 		return View(bookingId);
 	}
+
+
+=================================================	
+==========Section 13 Manage Bookings=============
+=================================================
+
+165 Empty Booking List UI
+- Add the Index Action method to the BookingController
+
+	public IActionResult Index()
+	{
+		return View();
+	}
+
+- Create an Index view from the Index action method
+
+	<div class="w-100 card border-0 p-4">
+		<div class="card-header bg-success bg-gradient ml-0 py-3">
+			<div class="row">
+				<div class="col-12 text-center">
+					<h2 class="text-white py-2">Booking List</h2>
+				</div>
+			</div>
+		</div>
+		<div class="card-body border p-4">
+
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Phone</th>
+						<th>Email</th>
+						<th>Status</th>
+						<th>Check In Date</th>
+						<th>Nights</th>
+						<th>Total</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+- Add the following below the Amenity in the dropdown list in the _Layout View:
+
+	<li><a class="dropdown-item" asp-area="" asp-controller="Booking" asp-action="Index">Booking</a></li>
+
 
 
 https://www.billingsclinic.com/careers/training-opportunities-for-students-seeking-health-care-experien/
