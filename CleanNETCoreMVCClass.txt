@@ -2416,3 +2416,13 @@ With
 			}
 		}
 	}
+
+
+- Go to Stripe.com and create a new account
+	davidpaysthebills@gmail
+	E*******6
+
+- Once in, create a new account called WhiteLagoon
+
+	Public Key: pk_test_51R3pGRPMzUJv9EUhfzyM2jHLnzeYpUmFRs5xSGHGjHz5FK2HPx50lDUK0Jhg37PAs7csmZMiI9S5M965reJzYFvm00m3KbKQiV
+	Private Key: sk_test_51R3pGRPMzUJv9EUhuOWH3muoRwURQDsqERkT0XtezPwEBscnx14WMmGJf2zacIZKMl5i21PtRQMth1VTWNrw4dLt00OGoUXqUk
