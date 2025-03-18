@@ -2445,3 +2445,42 @@ With
 		"PublishableKey": "pk_test_51R3pGRPMzUJv9EUhfzyM2jHLnzeYpUmFRs5xSGHGjHz5FK2HPx50lDUK0Jhg37PAs7csmZMiI9S5M965reJzYFvm00m3KbKQiV"
 	}
 
+- Right-click on WhietLagoon.Web and select Manage NuGet Packages
+- Search for "Stripe.Net" and install
+- Add the following for Stripe Configuration in the Program file after the var app...
+
+	StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
+
+162 Create Session in Stripe
+- Add the following to the FinalizeBooking Post method in the BookingController
+
+	var domain = Request.Scheme + "://" + Request.Host.Value + "/";
+	var options = new SessionCreateOptions
+	{
+		LineItems = new List<SessionLineItemOptions>(),
+		Mode = "payment",
+		SuccessUrl = domain + $"/booking/BookingConfirmation?bookingId={booking.Id}.html",
+		CancelUrl = domain + $"/booking/FinalizeBooking?villaId={booking.VillaId}&checkInDate={booking.CheckInDate}&nights={booking.Nights}.html",
+	};
+
+	options.LineItems.Add(new SessionLineItemOptions
+	{
+		PriceData = new SessionLineItemPriceDataOptions
+		{
+			UnitAmount = (long)(booking.TotalCost * 100),
+			Currency = "usd",
+			ProductData = new SessionLineItemPriceDataProductDataOptions
+			{
+				Name = villa.Name,
+			},
+		},
+		Quantity = 1,
+	});
+
+	var service = new SessionService();
+	Session session = service.Create(options);
+
+	Response.Headers.Add("Location", session.Url);
+
+	return new StatusCodeResult(303);
+
