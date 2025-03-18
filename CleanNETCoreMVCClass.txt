@@ -2656,7 +2656,43 @@ With
 	}
 	#endregion
 
+167 Data Tables
+- Add a table id to the <table in the Booking Index View:
 
+	<table id="tblBookings" class="table table-bordered table-striped">
+	
+- Create a new javascipt file called "booking" under js in wwwroot
+
+	var dataTable;
+
+
+	$(document).ready(function () {
+	loadDataTable();
+
+	});
+
+	function loadDataTable() {
+		dataTable = $('#tblBookings').DataTable({
+			"ajax": {
+				url: '/booking/getall'
+			},
+			"columns": [
+				{ data: 'id', width: '5%' },
+				{ data: 'name', width: '5%' },
+				{ data: 'phone', width: '5%' },
+				{ data: 'email', width: '5%' },
+				{ data: 'status', width: '5%' },
+				{ data: 'checkindate', width: '5%' },
+				{ data: 'nights', width: '5%' },
+			]
+		})
+	}
+
+- Add the script to the bottom of the Booking Index View:
+
+	@section Scripts {
+		<script src="~/js/booking.js"></script>
+	}
 
 
 
