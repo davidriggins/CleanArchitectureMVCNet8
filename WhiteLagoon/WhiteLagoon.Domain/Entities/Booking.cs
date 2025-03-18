@@ -58,7 +58,7 @@ namespace WhiteLagoon.Domain.Entities
 
         //=== For stipe payment processing=====
         public string? StripeSessionId { get; set; }
-        public string? StripePaymenIntenttId { get;}
+        public string? StripePaymenIntenttId { get; set; }
         //===End for stripe payment processing=====
 
         public DateTime ActualCheckInDate { get; set; }
