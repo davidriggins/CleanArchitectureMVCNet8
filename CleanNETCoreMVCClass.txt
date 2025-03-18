@@ -2322,4 +2322,50 @@ With
 	public const string StatusCancelled = "Cancelled";
 	public const string StatusRefunded = "Refunded";
 
+156 Finalize Booking Post
+- Create a FinalizeBooking HttpPost method and a BookingConfirmation Method
+  in the BookingController
+  
+	[Authorize]
+	[HttpPost]
+	public IActionResult FinalizeBooking(Booking booking)
+	{
+		var villa = _unitOfWork.Villa.Get(u=>u.Id == booking.VillaId);
 
+		booking.Status = SD.StatusPending;
+		booking.BookingDate = DateTime.Now;
+
+		booking.TotalCost = booking.Villa.Price * booking.Nights;
+
+		_unitOfWork.Booking.Add(booking);
+		_unitOfWork.Save();
+
+		return RedirectToAction("BookingConfirmation", new { bookingId = booking.Id });
+	}
+
+	[Authorize]
+	public IActionResult BookingConfirmation(int bookingId)
+	{
+		return View(bookingId);
+	}
+
+157 Solve Bugs with Finalize Booking
+- Create a new view from the BookingController "BookingConfirmation"
+- Copy the content of the course code for the BookingConfirmation to the BookingConfirmation View
+- Bind the contents
+- Add the hidden fields to the <form in the FinalizeBooking View:
+
+	<input asp-for="VillaId" hidden />
+	<input asp-for="UserId" hidden />
+
+- Change the booking.TotalCost line in the FinalizeBooking HttpPost to
+  fix a problem:
+
+	booking.TotalCost = villa.Price * booking.Nights;
+
+- With "disabled" on for elements, they will not be posted...so we needed
+  to add a few more hidden properties to the FinalizeBooking View Form
+
+	<input asp-for="CheckInDate" hidden />
+	<input asp-for="CheckOutDate" hidden />
+	<input asp-for="Nights" hidden />
