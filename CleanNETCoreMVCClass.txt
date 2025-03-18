@@ -2754,6 +2754,43 @@ With
 		</ul>
 	</div>
 
+170 Make Selected Status Active
+- Add the following to the top of the Booking Index View:
+
+	@{
+		var status = Context.Request.Query["status"];
+
+		var approved = "";
+		var pending = "";
+		var checkedIn = "";
+		var completed = "";
+		var cancelled = "";
+
+		switch (status)
+		{
+			case SD.StatusPending:
+				pending = "text-white bg-success";
+				break;
+			case SD.StatusApproved:
+				approved = "text-white bg-success";
+				break;
+			case SD.StatusCheckedIn:
+				checkedIn = "text-white bg-success";
+				break;
+			case SD.StatusCompleted:
+				completed = "text-white bg-success";
+				break;
+			case SD.StatusCancelled:
+				cancelled = "text-white bg-success";
+				break;
+
+			default:
+				break;
+		}
+
+	}
+
+- Add each individual variable to the various <li> elements.
 
 
 
