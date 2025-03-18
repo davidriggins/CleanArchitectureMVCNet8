@@ -2437,4 +2437,11 @@ With
 	Public Key: pk_test_51R3pGRPMzUJv9EUhfzyM2jHLnzeYpUmFRs5xSGHGjHz5FK2HPx50lDUK0Jhg37PAs7csmZMiI9S5M965reJzYFvm00m3KbKQiV
 	Private Key: sk_test_51R3pGRPMzUJv9EUhuOWH3muoRwURQDsqERkT0XtezPwEBscnx14WMmGJf2zacIZKMl5i21PtRQMth1VTWNrw4dLt00OGoUXqUk
 
+161 Add Stripe Keys and NuGet Package
+- Add the keys to the appsettings.json file:
+
+	"Stripe": {
+		"SecretKey": "sk_test_51R3pGRPMzUJv9EUhuOWH3muoRwURQDsqERkT0XtezPwEBscnx14WMmGJf2zacIZKMl5i21PtRQMth1VTWNrw4dLt00OGoUXqUk",
+		"PublishableKey": "pk_test_51R3pGRPMzUJv9EUhfzyM2jHLnzeYpUmFRs5xSGHGjHz5FK2HPx50lDUK0Jhg37PAs7csmZMiI9S5M965reJzYFvm00m3KbKQiV"
+	}
 
