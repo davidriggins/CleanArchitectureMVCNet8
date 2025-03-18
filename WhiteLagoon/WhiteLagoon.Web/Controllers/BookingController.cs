@@ -64,6 +64,5 @@ namespace WhiteLagoon.Web.Controllers
         {
             return View(bookingId);
         }
-
     }
 }

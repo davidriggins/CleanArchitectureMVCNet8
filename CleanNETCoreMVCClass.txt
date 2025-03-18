@@ -2177,9 +2177,15 @@ and
 
 	add-migration addBookingToDb
 	update-database
+<<<<<<< HEAD
 
 149 Get Action Finalize Booking
 - Create a BookingController
+=======
+	
+149 Get Action FinalizeBooking
+- Create a new controller called BookingController
+>>>>>>> 02c656c (End Lesson 149)
 
 	public class BookingController : Controller
 	{
@@ -2189,7 +2195,10 @@ and
 			_unitOfWork = unitOfWork;
 		}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 02c656c (End Lesson 149)
 		public IActionResult FinalizeBooking(int villaId, DateOnly checkInDate, int nights)
 		{
 			Booking booking = new()
@@ -2200,6 +2209,7 @@ and
 				Nights = nights,
 				CheckOutDate = checkInDate.AddDays(nights),
 			};
+<<<<<<< HEAD
 			return View(booking);
 		}
 	}
@@ -2426,3 +2436,5 @@ With
 
 	Public Key: pk_test_51R3pGRPMzUJv9EUhfzyM2jHLnzeYpUmFRs5xSGHGjHz5FK2HPx50lDUK0Jhg37PAs7csmZMiI9S5M965reJzYFvm00m3KbKQiV
 	Private Key: sk_test_51R3pGRPMzUJv9EUhuOWH3muoRwURQDsqERkT0XtezPwEBscnx14WMmGJf2zacIZKMl5i21PtRQMth1VTWNrw4dLt00OGoUXqUk
+
+
