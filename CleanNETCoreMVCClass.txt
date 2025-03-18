@@ -2726,6 +2726,35 @@ With
 		});
 	}
 
+169 Status on Booking List
+- Add the following to the Booking Index View:
+
+	<div class="d-flex justify-content-end pb-4 pt-2">
+		<ul class="list-group list-group-horizontal-sm">
+			<a style="text-decoration:none;" asp-controller="Booking" asp-action="Index"
+				asp-route-status="@SD.StatusPending">
+				<li class="list-group-item"> @SD.StatusPending </li>
+			</a>
+			<a style="text-decoration:none;" asp-controller="Booking" asp-action="Index"
+			   asp-route-status="@SD.StatusApproved">
+				<li class="list-group-item"> @SD.StatusApproved </li>
+			</a>
+			<a style="text-decoration:none;" asp-controller="Booking" asp-action="Index"
+			   asp-route-status="@SD.StatusCheckedIn">
+				<li class="list-group-item"> @SD.StatusCheckedIn </li>
+			</a>
+			<a style="text-decoration:none;" asp-controller="Booking" asp-action="Index"
+			   asp-route-status="@SD.StatusCompleted">
+				<li class="list-group-item"> @SD.StatusCompleted </li>
+			</a>
+			<a style="text-decoration:none;" asp-controller="Booking" asp-action="Index"
+			   asp-route-status="@SD.StatusCancelled">
+				<li class="list-group-item"> @SD.StatusCancelled </li>
+			</a>
+		</ul>
+	</div>
+
+
 
 
 https://www.billingsclinic.com/careers/training-opportunities-for-students-seeking-health-care-experien/
