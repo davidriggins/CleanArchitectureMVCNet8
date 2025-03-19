@@ -3023,3 +3023,42 @@ With
 	}
 
 183 Update Status In Action
+- Add asp-controller and asp-action statements to buttons in BookingDetails
+- Create the "else" condition in the following in BookingDetails:
+
+	@if (Model.Status == SD.StatusApproved && User.IsInRole(SD.Role_Admin))
+	{
+		<div class="form-group pt-2 col-6">
+			<label class="text-danger" asp-for="VillaNumber"></label>
+
+			<select class="form-select" asp-for="VillaNumber">
+				@foreach (var item in Model.VillaNumbers)
+				{
+					<option value="@item.Villa_Number">@item.Villa_Number</option>
+				}
+			</select>
+		</div>
+	}
+	else
+	{
+		@if (Model.Status == SD.StatusCheckedIn || Model.Status == SD.StatusCompleted)
+		{
+			<div class="form-group pt-2 col-6">
+				<label class="text-warning">Villa Number</label>
+				<input asp-for="VillaNumber" disabled class="form-control" />
+			</div>
+		}
+		
+	}
+
+- Display Status before the Check In and Check Out buttons in BookingDetails
+
+	<div class="form-group pt-2 col-6">
+		<label class="text-warning">Status</label>
+		<input asp-for="Status" disabled class="form-control" />
+	</div>
+
+- Display the following hidden field if not displaying dropdown:
+
+	<input asp-for="VillaNumber" hidden />
+
