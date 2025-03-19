@@ -2809,3 +2809,6 @@ With
 
 - Copy the content of the course code for the BookingDetails to the BookingDetails View
 
+173 Make Booking Details Dynamic
+- Make bindings in the BookingDetails View
+
