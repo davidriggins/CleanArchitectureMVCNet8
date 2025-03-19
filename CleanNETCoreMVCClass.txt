@@ -2860,3 +2860,18 @@ With
 		return finalAvailableRoomsForAllNights;
 	}
 
+177 Availability in Action.
+- Add the logic to the beginning of the GetVillasByDate method in the HomeController:
+
+	var villaNumbersList = _unitOfWork.VillaNumber.GetAll().ToList();
+	var bookedVillas = _unitOfWork.Booking.GetAll(u => u.Status == SD.StatusApproved ||
+		u.Status == SD.StatusCheckedIn).ToList();
+
+	foreach (var villa in villaList)
+	{
+		int roomsAvailable = SD.VillaRoomsAvailable_Count(villa.Id, 
+			villaNumbersList,checkInDate, nights, bookedVillas);
+
+		villa.IsAvailable = roomsAvailable > 0 ? true : false;
+	}
+
