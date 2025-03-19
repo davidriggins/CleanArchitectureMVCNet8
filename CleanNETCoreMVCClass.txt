@@ -3062,3 +3062,25 @@ With
 
 	<input asp-for="VillaNumber" hidden />
 
+184 Check Availability Before Placing Order
+- Add the following to the FinalizeBooking Endpoint in BookingController:
+
+	var villaNumbersList = _unitOfWork.VillaNumber.GetAll().ToList();
+	var bookedVillas = _unitOfWork.Booking.GetAll(u => u.Status == SD.StatusApproved ||
+		u.Status == SD.StatusCheckedIn).ToList();
+
+	int roomsAvailable = SD.VillaRoomsAvailable_Count(villa.Id,
+		villaNumbersList, booking.CheckInDate, booking.Nights, bookedVillas);
+
+	if (roomsAvailable == 0)
+	{
+		TempData["Error"] = "No Rooms Available for the selected dates";
+		
+		return RedirectToAction(nameof(FinalizeBooking), new 
+		{ 
+			villaId = booking.VillaId, 
+			checkInDate = booking.CheckInDate, 
+			nights = booking.Nights 
+		});
+	}
+
