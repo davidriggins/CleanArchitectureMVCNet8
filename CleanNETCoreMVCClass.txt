@@ -2795,6 +2795,17 @@ With
 171 Status Filter in Action
 - 
 
+172 Booking Details in Action
+- Add a new BookingDetails action method in the BookingController
 
+	[Authorize]
+	public IActionResult BookingDetails(int bookingId)
+	{
+		Booking bookdingFromDb = _unitOfWork.Booking.Get(u => u.Id == bookingId, 
+			includeProperties: "User,Villa");
 
-https://www.billingsclinic.com/careers/training-opportunities-for-students-seeking-health-care-experien/
+		return View(bookdingFromDb);
+	}   
+
+- Copy the content of the course code for the BookingDetails to the BookingDetails View
+

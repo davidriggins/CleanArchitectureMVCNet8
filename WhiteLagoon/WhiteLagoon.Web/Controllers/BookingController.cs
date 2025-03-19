@@ -130,6 +130,14 @@ namespace WhiteLagoon.Web.Controllers
         }
 
 
+        [Authorize]
+        public IActionResult BookingDetails(int bookingId)
+        {
+            Booking bookdingFromDb = _unitOfWork.Booking.Get(u => u.Id == bookingId, 
+                includeProperties: "User,Villa");
+
+            return View(bookdingFromDb);
+        }   
 
         #region API Calls
 
