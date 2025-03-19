@@ -2954,3 +2954,44 @@ With
 		return View(bookingFromDb);
 	}
 
+180 Display Available Room Number DropDown
+- Add the following inside of BookingDetails View:
+
+	@if (Model.Status == SD.StatusApproved && User.IsInRole(SD.Role_Admin))
+	{
+		<div class="form-group pt-2 col-6">
+			<label class="text-danger" asp-for="VillaNumber"></label>
+
+			<select class="form-select" asp-for="VillaNumber">
+				@foreach (var item in Model.VillaNumbers)
+				{
+					<option value="@item.Villa_Number">@item.Villa_Number</option>
+				}
+			</select>
+		</div>
+	}
+
+181 Check In Post Endpoint
+- Add the following hidden properties to the form in the BookingDetails <form>
+
+	<input asp-for="Id" hidden />
+	<input asp-for="VillaId" hidden />
+	<input asp-for="UserId" hidden />
+	<input asp-for="CheckInDate" hidden />
+	<input asp-for="CheckOutDate" hidden />
+	<input asp-for="Nights" hidden />
+
+- Add the following Endpoint method in BookingController:
+
+	[HttpPost]
+	[Authorize(Roles = SD.Role_Admin)]
+	public IActionResult Checking(Booking booking)
+	{
+		_unitOfWork.Booking.UpdateStatus(booking.Id, SD.StatusCheckedIn, booking.VillaNumber);
+		_unitOfWork.Save();
+
+		TempData["Success"] = "Booking Updated Successfully";
+
+		return RedirectToAction(nameof(BookingDetails), new { bookingId = booking.Id });
+	}
+
