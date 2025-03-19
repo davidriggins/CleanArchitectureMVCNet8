@@ -2812,3 +2812,51 @@ With
 173 Make Booking Details Dynamic
 - Make bindings in the BookingDetails View
 
+174 Booking Details based on Role
+- Add if conditions around buttons and Stripe Information
+
+175/176 Booking Availability
+- Add the following static method in the SD class:
+
+	public static int VillaRoomsAvailable_Count(int villaId,
+		List<VillaNumber> villaNumberList,
+		DateOnly checkInDate,
+		int nights,
+		List<Booking> bookings)
+	{
+		List<int> bookingInDate = new();
+		int finalAvailableRoomsForAllNights = int.MaxValue;
+
+		var roomsInVilla = villaNumberList.Where(x => x.VillaId == villaId).Count();
+
+		for (int i = 0; i < nights; i++)
+		{
+			var villasBooked = bookings.Where(x => x.CheckInDate <= checkInDate.AddDays(i) &&
+				x.CheckOutDate > checkInDate.AddDays(i) &&
+				x.VillaId == villaId);
+
+			foreach(var booking in villasBooked)
+			{
+				if (!bookingInDate.Contains(booking.Id))
+				{
+					bookingInDate.Add(booking.Id);
+				}
+			}
+
+			var totalAvailableRooms = roomsInVilla - bookingInDate.Count();
+			if (totalAvailableRooms == 0)
+			{
+				return 0;
+			}
+			else
+			{
+				if (finalAvailableRoomsForAllNights > totalAvailableRooms)
+				{
+					finalAvailableRoomsForAllNights = totalAvailableRooms;
+				}
+			}
+		}
+
+		return finalAvailableRoomsForAllNights;
+	}
+
