@@ -2875,3 +2875,39 @@ With
 		villa.IsAvailable = roomsAvailable > 0 ? true : false;
 	}
 
+178 Add Villa Number on Updating Status
+- Add the following property to the Booking entity:
+
+	[NotMapped]
+	public List<VillaNumber> VillaNumbers { get; set; }
+
+- Change UpdateStatus in the  BookingRepository:
+
+	public void UpdateStatus(int bookingId, string bookingStatus, int villaNumber = 0)
+	{
+		var bookingFromDb = _db.Bookings.FirstOrDefault(b => b.Id == bookingId);
+
+		if (bookingFromDb != null) 
+		{
+			bookingFromDb.Status = bookingStatus;
+			
+			if (bookingStatus == SD.StatusCheckedIn)
+			{
+				bookingFromDb.VillaNumber = villaNumber;
+				bookingFromDb.ActualCheckInDate = DateTime.Now;
+			}
+			else if (bookingStatus == SD.StatusCompleted)
+			{
+				bookingFromDb.ActualCheckOutDate = DateTime.Now;
+			}
+		}
+	}
+
+- Change the IBookingRepository to reflect the new argument for the method above:
+
+	void UpdateStatus(int bookingId, string bookingStatus, int villaNumber);
+
+- In the BookingController, add a 0 argument at the end of the following call:
+
+	_unitOfWork.Booking.UpdateStatus(bookingFromDb.Id, SD.StatusApproved, 0);
+
