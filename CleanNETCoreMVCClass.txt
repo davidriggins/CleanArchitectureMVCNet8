@@ -2792,6 +2792,9 @@ With
 
 - Add each individual variable to the various <li> elements.
 
+171 Status Filter in Action
+- 
+
 
 
 https://www.billingsclinic.com/careers/training-opportunities-for-students-seeking-health-care-experien/
