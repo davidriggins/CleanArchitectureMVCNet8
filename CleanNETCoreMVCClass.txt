@@ -3297,7 +3297,7 @@ With
 - Extract the downloaded zip file
 - Copy the apexcharts.js to the wwwroot/js folder
 - Copy the apexcharts.css to the wwwroot/css folder
-- Add the css link and js script tag to the _Layout View
+- Add the css link and js script tag to the _LayoutAdmin View
 
 	<link rel="stylesheet" href="~/css/apexcharts.css" />
 	
@@ -3420,3 +3420,39 @@ With
 	@section Scripts {
 		<script src="~/js/dashboard/getTotalBookingsRadial.js"></script>
 	}
+
+197/198 Radial Chart in Action
+- Call loadRadialBarChart in loadTotalBookingRadialChart function:
+
+	loadRadialBarChart("totalBookingsRadialChart", data);
+
+- Copy the code example in the second Circular Gauge from ApexCharts and modify to:
+
+	function loadRadialBarChart(id, data) {
+		var options = {
+			chart: {
+				height: 90,
+				width: 90,
+				type: "radialBar",
+				sparkline: {
+					enabled: true
+				},
+				offsetY: -10,
+			},
+			series: data.series,
+			plotOptions: {
+				radialBar: {
+					dataLabels: {
+						value: {
+							offsetY: -10,
+						}
+					}
+				}
+			},
+			labels: [""]
+		};
+		var chart = new ApexCharts(document.querySelector("#" + id), options);
+		chart.render();
+
+	}
+
