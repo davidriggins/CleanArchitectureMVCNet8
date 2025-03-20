@@ -3655,3 +3655,80 @@ With
 			</div>
 		</div>
 	</div>
+
+207 Endpoint for Pie Chart Action
+- Add the following endpoint in the Dashboard Controller:
+
+	public async Task<IActionResult> GetBookingPieChartData()
+	{
+		var totalBookings = _unitOfWork.Booking.GetAll(u => u.BookingDate >= DateTime.Now.AddDays(-30) &&
+		(u.Status != SD.StatusPending || u.Status == SD.StatusCancelled));
+
+		var customerWithOneBooking = totalBookings.GroupBy(b => b.UserId).Where(x => x.Count() == 1).Select(x => x.Key).ToList();
+
+		int bookingsByNewCustomer = customerWithOneBooking.Count();
+		int bookingsByReturningCustomer = totalBookings.Count() - bookingsByNewCustomer;
+
+		PieChartVM pieChartVM = new()
+		{
+			Labels = new string[] { "New Customer Bookings", "Returning Customer Bookings" },
+			Series = new decimal[] { bookingsByNewCustomer, bookingsByReturningCustomer }
+		};
+
+
+		return Json(pieChartVM);
+	}
+
+208 Pie Chart in Action
+- Create a new javascript file called getCustomerBookingPieChart.js
+
+	$(document).ready(function () {
+		loadCustomerBookingPieChart();
+	});
+
+	function loadCustomerBookingPieChart() {
+		$(".chart-spinner").show();
+
+		$.ajax({
+			url: "/Dashboard/GetBookingPieChartData",
+			type: 'GET',
+			dataType: 'json',
+			success: function (data) {
+
+				loadPieChart("customerBookingsPieChart", data);
+
+				$(".chart-spinner").hide();
+			}
+		});
+	}
+
+	function loadPieChart(id, data) {
+		var chartColors = getChartColorsArray(id);
+		var options = {
+			colors: chartColors,
+			series: data.series,
+			labels: data.labels,
+			chart: {
+				width: 380,
+				type: 'pie',
+			},
+			stroke: {
+				show: false
+			},
+			legend: {
+				position: 'bottom',
+				horizontalAlign: 'center',
+				labels: {
+					colors: "#fff",
+					useSeriesColors: true
+				},
+			},
+		};
+		var chart = new ApexCharts(document.querySelector("#" + id), options);
+		chart.render();
+	}
+	
+- Add this line to the end of the Dashboard Index View:
+
+	<script src="~/js/dashboard/getCustomerBookingPieChart.js"></script>
+
