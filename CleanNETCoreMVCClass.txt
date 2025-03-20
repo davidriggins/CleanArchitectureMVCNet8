@@ -3732,3 +3732,17 @@ With
 
 	<script src="~/js/dashboard/getCustomerBookingPieChart.js"></script>
 
+209 Line Chart VM
+- Create a new View Model called LineChartVM:
+
+	 public class LineChartVM
+	 {
+		 public List<ChartData> Series { get; set; }
+		 public string[] Categories { get; set; }
+	 }
+
+	 public class ChartData
+	 {
+		 public string Name { get; set; }
+		 public int[] Data { get; set; }
+	 }
