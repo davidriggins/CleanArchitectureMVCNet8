@@ -3462,3 +3462,39 @@ With
 - Add the following to the end of the Dashboard Index View:
 
 	<script src="~/js/dashboard/radialChart.js"></script>
+
+200 Custom Color for Radial Chart
+- Add data-colors attribute to the following div in Dashboard Index View:
+
+	<div id="totalBookingsRadialChart" data-colors='["--bs-success"]'</div>
+
+- Copy the content of the course code for the Colors for Radial Chart to the radialChart
+  inside the getChartColorsArray function:
+  
+	function getChartColorsArray(id) {
+		if (document.getElementById(id) !== null) {
+			var colors = document.getElementById(id).getAttribute("data-colors");
+
+			if (colors) {
+				colors = JSON.parse(colors);
+				return colors.map(function (value) {
+					var newValue = value.replace(" ", "");
+					if (newValue.indexOf(",") === -1) {
+						var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
+						if (color) return color;
+						else return newValue;
+					}
+				});
+			}
+		}
+	}
+
+- Add the following in the loadRadialBarChart function:
+
+	var chartColors = getChartColorsArray(id);
+
+	var options = {
+		fill: {
+			colors: chartColors
+		},
+	
