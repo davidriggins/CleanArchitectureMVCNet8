@@ -3746,3 +3746,29 @@ With
 		 public string Name { get; set; }
 		 public int[] Data { get; set; }
 	 }
+
+210 Retrieve Data for Line Chart
+- Add a new endpoint in the Dashboard Controller:
+
+	public async Task<IActionResult> GetMemberAndBookingLineChartData()
+	{
+		var bookingData = _unitOfWork.Booking.GetAll(u => u.BookingDate >= DateTime.Now.AddDays(-30) &&
+			u.BookingDate <= DateTime.Now)
+			.GroupBy(b=>b.BookingDate.Date)
+			.Select(u => new
+			{
+				DateTime = u.Key,
+				NewBookingCount = u.Count(),
+			});
+
+		var customerData = _unitOfWork.User.GetAll(u => u.CreatedAt >= DateTime.Now.AddDays(-30) &&
+			u.CreatedAt <= DateTime.Now)
+			.GroupBy(b => b.CreatedAt.Date)
+			.Select(u => new
+			{
+				DateTime = u.Key,
+				NewCustomerCount = u.Count(),
+			});
+
+		return Json(bookingData);
+	}
