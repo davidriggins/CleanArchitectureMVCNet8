@@ -3456,3 +3456,9 @@ With
 
 	}
 
+199 Better code Design
+- Create a new javascript file in wwwroot/js/dashboard called "radialChart.js"
+- Cut the loadTotalBookingRadialChart function into the new javascipt file.
+- Add the following to the end of the Dashboard Index View:
+
+	<script src="~/js/dashboard/radialChart.js"></script>
