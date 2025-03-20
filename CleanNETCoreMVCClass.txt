@@ -3286,3 +3286,14 @@ With
 		margin-bottom: 20px;
 	}
 	
+
+=================================================	
+==========Section 16 Charts======================
+=================================================
+
+190 Add Apex Charts to Project
+- Go to apexcharts.com
+- Click the Download button
+- Extract the downloaded zip file
+- Copy the apexcharts.js to the wwwroot/js folder
+- Copy the apexcharts.css to the wwwroot/css folder
