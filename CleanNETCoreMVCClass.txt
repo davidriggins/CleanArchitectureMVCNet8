@@ -3844,3 +3844,22 @@ With
 	}
 
 212 Line Chart Part 1
+
+
+
+=================================================	
+===Section 20 Clean Architecture Structuring=====
+=================================================
+
+236 Create Villa Service Interface
+- In the WhiteLagoon.Application, create a IVillaService interface in the Services/Interface folder
+
+	public interface IVillaService
+	{
+		IEnumerable<Villa> GetAllVillas();
+		Villa GetVillaById(int id);
+		void CreateVilla(Villa villa);
+		void UpdateVilla(Villa villa);
+		bool DeleteVilla(int id);
+	}
+
