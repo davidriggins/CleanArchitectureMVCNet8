@@ -9,7 +9,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="float-end mt-2">
-                        <div id="totalBookingsRadialChart" data-colors='["--bs-success"]'</div>
+                        <div id="totalBookingsRadialChart" data-colors='["--bs-success"]'></div>
                     </div>
                     <div>
                         <p class="text-muted mb-0">Total Bookings</p>
@@ -24,6 +24,7 @@
                             <span class="visually-hidden">Loading...</span>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -31,7 +32,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="float-end mt-2">
-                        <div id="totalUserRadialChart" data-colors='["--bs-warning"]'</div>
+                        <div id="totalUserRadialChart" data-colors='["--bs-warning"]'></div>
                     </div>
                     <div>
                         <p class="text-muted mb-0">Total Users</p>
@@ -46,6 +47,7 @@
                             <span class="visually-hidden">Loading...</span>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -53,7 +55,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="float-end mt-2">
-                        <div id="totalRevenueRadialChart" data-colors='["#F0006B"]'</div>
+                        <div id="totalRevenueRadialChart" data-colors='["#F0006B"]'></div>
                     </div>
                     <div>
                         <p class="text-muted mb-0">Total Revenue</p>
@@ -68,6 +70,7 @@
                             <span class="visually-hidden">Loading...</span>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -77,4 +80,6 @@
 @section scripts {
     <script src="~/js/dashboard/radialChart.js"></script>
     <script src="~/js/dashboard/getTotalBookingsRadial.js"></script>
+    <script src="~/js/dashboard/getTotalRevenueRadial.js"></script>
+    <script src="~/js/dashboard/getTotalUserRadial.js"></script>
 }

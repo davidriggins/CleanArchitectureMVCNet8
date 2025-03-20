@@ -1,8 +1,5 @@
-﻿
-function loadRadialBarChart(id, data) {
-
+﻿function loadRadialBarChart(id, data) {
     var chartColors = getChartColorsArray(id);
-
     var options = {
         fill: {
             colors: chartColors
@@ -22,6 +19,7 @@ function loadRadialBarChart(id, data) {
                 dataLabels: {
                     value: {
                         offsetY: -10,
+                        color: chartColors[0],
                     }
                 }
             }
@@ -33,10 +31,10 @@ function loadRadialBarChart(id, data) {
 
 }
 
+
 function getChartColorsArray(id) {
     if (document.getElementById(id) !== null) {
         var colors = document.getElementById(id).getAttribute("data-colors");
-
         if (colors) {
             colors = JSON.parse(colors);
             return colors.map(function (value) {
@@ -48,5 +46,6 @@ function getChartColorsArray(id) {
                 }
             });
         }
+
     }
 }
