@@ -3297,3 +3297,20 @@ With
 - Extract the downloaded zip file
 - Copy the apexcharts.js to the wwwroot/js folder
 - Copy the apexcharts.css to the wwwroot/css folder
+- Add the css link and js script tag to the _Layout View
+
+	<link rel="stylesheet" href="~/css/apexcharts.css" />
+	
+	<script src="~/js/apexcharts.js"></script>
+
+192 RadialBarChart VM
+- Create a new ViewModel called "RadialBarChartVM"
+
+	public class RadialBarChartVM
+	{
+		public decimal TotalCount { get; set; }
+		public decimal IncreaseDecreaseAmount { get; set; }
+		public bool HasRatioIncreased { get; set; }
+		public int[] Series { get; set; }
+	}
+
