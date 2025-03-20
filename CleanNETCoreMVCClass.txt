@@ -3279,3 +3279,10 @@ With
 		</li>
 	</ul>
 
+188 Style Updates
+- Add the following in site.css
+
+	.dataTables_filter {
+		margin-bottom: 20px;
+	}
+	
