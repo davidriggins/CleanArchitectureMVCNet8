@@ -3498,3 +3498,42 @@ With
 			colors: chartColors
 		},
 	
+201 Endpoint for Registered User Count
+- Create a new function in the DashboardController:
+
+	public async Task<IActionResult> GetRegisteredUserChartDataAync()
+	{
+		var totalUsers = _unitOfWork.User.GetAll();
+
+		var countByCurrentMonth = totalUsers.Count(u => u.CreatedAt >= currentMonthStartDate &&
+			u.CreatedAt <= DateTime.Now);
+
+		var countByPreviousMonth = totalUsers.Count(u => u.CreatedAt >= previousMonthStartDate &&
+			u.CreatedAt <= currentMonthStartDate);
+
+		
+
+		return Json(GetRadialChartDataModel(totalUsers.Count(), countByCurrentMonth, countByPreviousMonth));
+	}
+
+- Create another reusable method in the DashboardController and use it in the current methods:
+
+	private static RadialBarChartVM GetRadialChartDataModel(int totalCount, double countInCurrentMonth, double prevMonthCount)
+	{
+		RadialBarChartVM radialBarChartVM = new();
+
+		int increaseDecreaseRatio = 100;
+
+		if (prevMonthCount != 0)
+		{
+			increaseDecreaseRatio = Convert.ToInt32((countInCurrentMonth - prevMonthCount) * 100 / prevMonthCount);
+		}
+
+		radialBarChartVM.TotalCount = totalCount;
+		radialBarChartVM.CountInCurrentMonth = Convert.ToInt32(countInCurrentMonth);
+		radialBarChartVM.HasRatioIncreased = countInCurrentMonth > prevMonthCount;
+		radialBarChartVM.Series = new int[] { increaseDecreaseRatio };
+
+		return radialBarChartVM;
+	}
+
