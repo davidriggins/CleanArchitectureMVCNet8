@@ -90,24 +90,68 @@ namespace WhiteLagoon.Web.Controllers
         public async Task<IActionResult> GetMemberAndBookingLineChartData()
         {
             var bookingData = _unitOfWork.Booking.GetAll(u => u.BookingDate >= DateTime.Now.AddDays(-30) &&
-                u.BookingDate <= DateTime.Now)
-                .GroupBy(b=>b.BookingDate.Date)
-                .Select(u => new
-                {
+            u.BookingDate.Date <= DateTime.Now)
+                .GroupBy(b => b.BookingDate.Date)
+                .Select(u => new {
                     DateTime = u.Key,
-                    NewBookingCount = u.Count(),
+                    NewBookingCount = u.Count()
                 });
 
             var customerData = _unitOfWork.User.GetAll(u => u.CreatedAt >= DateTime.Now.AddDays(-30) &&
-                u.CreatedAt <= DateTime.Now)
+            u.CreatedAt.Date <= DateTime.Now)
                 .GroupBy(b => b.CreatedAt.Date)
-                .Select(u => new
-                {
+                .Select(u => new {
                     DateTime = u.Key,
-                    NewCustomerCount = u.Count(),
+                    NewCustomerCount = u.Count()
                 });
 
-            return Json(bookingData);
+
+            var leftJoin = bookingData.GroupJoin(customerData, booking => booking.DateTime, customer => customer.DateTime,
+                (booking, customer) => new
+                {
+                    booking.DateTime,
+                    booking.NewBookingCount,
+                    NewCustomerCount = customer.Select(x => x.NewCustomerCount).FirstOrDefault()
+                });
+
+
+            var rightJoin = customerData.GroupJoin(bookingData, customer => customer.DateTime, booking => booking.DateTime,
+                (customer, booking) => new
+                {
+                    customer.DateTime,
+                    NewBookingCount = booking.Select(x => x.NewBookingCount).FirstOrDefault(),
+                    customer.NewCustomerCount
+                });
+
+            var mergedData = leftJoin.Union(rightJoin).OrderBy(x => x.DateTime).ToList();
+
+            var newBookingData = mergedData.Select(x => x.NewBookingCount).ToArray();
+            var newCustomerData = mergedData.Select(x => x.NewCustomerCount).ToArray();
+            var categories = mergedData.Select(x => x.DateTime.ToString("MM/dd/yyyy")).ToArray();
+
+            List<ChartData> chartDataList = new()
+            {
+                new ChartData
+                {
+                    Name = "New Bookings",
+                    Data = newBookingData
+                },
+                new ChartData
+                {
+                    Name = "New Members",
+                    Data = newCustomerData
+                },
+            };
+
+            LineChartVM lineChartVM = new()
+            {
+                Categories = categories,
+                Series = chartDataList
+            };
+
+
+
+            return Json(lineChartVM);
         }
 
 
