@@ -3309,8 +3309,38 @@ With
 	public class RadialBarChartVM
 	{
 		public decimal TotalCount { get; set; }
-		public decimal IncreaseDecreaseAmount { get; set; }
+		public decimal CountInCurrentMonth { get; set; }
 		public bool HasRatioIncreased { get; set; }
 		public int[] Series { get; set; }
 	}
 
+193/194 Endpoint for Loading Bookings Data
+- Add the following endpoint to the DashboardController
+
+	public async Task<IActionResult> GetTotalBookingRadialChartData()
+	{
+		var totalBookings = _unitOfWork.Booking.GetAll(u => u.Status != SD.StatusPending ||
+			u.Status == SD.StatusCancelled);
+
+		var countByCurrentMonth = totalBookings.Count(u => u.BookingDate >= currentMonthStartDate &&
+			u.BookingDate <= DateTime.Now);
+
+		var countByPreviousMonth = totalBookings.Count(u => u.BookingDate >= previousMonthStartDate &&
+			u.BookingDate <= currentMonthStartDate);
+
+		RadialBarChartVM radialBarChartVM = new();
+
+		int increaseDecreaseRatio = 100;
+
+		if (countByPreviousMonth != 0)
+		{
+			increaseDecreaseRatio = Convert.ToInt32((countByCurrentMonth - countByPreviousMonth) * 100 / countByPreviousMonth);
+		}
+
+		radialBarChartVM.TotalCount = totalBookings.Count();
+		radialBarChartVM.CountInCurrentMonth = countByCurrentMonth;
+		radialBarChartVM.HasRatioIncreased = currentMonthStartDate > previousMonthStartDate;
+		radialBarChartVM.Series = new int[] {increaseDecreaseRatio };
+
+		return Json(radialBarChartVM);
+	}
