@@ -3609,3 +3609,14 @@ With
 	</div>
 
 204 Radial Charts in Action
+ ... skipped adding info here
+ 
+205 Pie Chart VM
+- Create a new View Model called "PieChartVM"
+
+	public class PieChartVM
+	{
+		public decimal[] Series { get; set; }
+		public string[] Labels { get; set; }
+	}
+
